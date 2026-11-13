@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AI Solar Lake Cleaning Robot — Mobile & Desktop 3D Simulator</title>
+
+    <!-- Standard global Three.js r128 & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+        :root {
+            --bg-void: #060911;
+            --bg-panel: rgba(11, 15, 25, 0.96);
+            --bg-card: #111827;
+            --bg-card-alt: #182236;
+            --accent-crimson: #f43f5e;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(139, 92, 246, 0.32);
+            --border-subtle: rgba(148, 163, 184, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            overscroll-behavior: none;
+        }
+
+        #app-shell {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* ================= LEFT / BOTTOM COMMAND SIDEBAR ================= */
+        #command-sidebar {
+            width: 420px;
+            min-width: 340px;
+            height: 100%;
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border-glow);
+            display: flex;
+            flex-direction: column;
+            z-index: 25;
+            box-shadow: 10px 0 35px rgba(0, 0, 0, 0.7);
+        }
+
+        .sidebar-top {
+            padding: 12px 16px 10px;
+            border-bottom: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, transparent 100%);
+        }
+
+        .badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .sys-tag {
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-crimson);
+        }
+
+        .live-chip {
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+        }
+
+        .live-chip.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+        }
+
+        .sidebar-top h1 {
+            font-size: 1.08rem;
+            font-weight: 800;
+            line-height: 1.22;
+            color: #ffffff;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(6, 9, 17, 0.65);
+            border-bottom: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            padding: 7px 4px;
+            border-radius: 7px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-crimson));
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        /* Tab Content Containers */
+        .tab-pane {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 12px 14px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+
+        .tab-pane.active {
+            display: flex;
+        }
+
+        .env-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            border-left: 4px solid var(--accent-emerald);
+            border-radius: 9px;
+            padding: 9px 11px;
+            font-size: 0.76rem;
+            line-height: 1.38;
+            color: var(--text-muted);
+        }
+
+        .env-card strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* Component Detail Inspector Card */
+        .inspector-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 11px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .inspector-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 6px;
+            gap: 8px;
+        }
+
+        .inspector-head h2 {
+            font-size: 0.94rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .num-circle {
+            background: linear-gradient(135deg, var(--accent-crimson), var(--accent-purple));
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 0.74rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #ffffff;
+            flex-shrink: 0;
+        }
+
+        .spec-pill {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.14);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: var(--accent-cyan);
+            font-size: 0.66rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 5px;
+            align-self: flex-start;
+        }
+
+        .info-row {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .info-label {
+            font-size: 0.63rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-cyan);
+        }
+
+        .info-body {
+            font-size: 0.79rem;
+            line-height: 1.38;
+            color: var(--text-main);
+        }
+
+        .sub-heading {
+            font-size: 0.66rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .part-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 7px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            text-align: left;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .part-btn.active {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-crimson));
+            border-color: #ffffff;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* Tab 2 & 3 Canvases */
+        .feed-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .feed-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.66rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+        }
+
+        .feed-canvas {
+            width: 100%;
+            height: 135px;
+            background: #050811;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
+        }
+
+        #heatmap-canvas {
+            width: 100%;
+            height: 190px;
+            background: #071921;
+            border-radius: 7px;
+            border: 1px solid var(--border-glow);
+            display: block;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .stat-box {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-subtle);
+            border-radius: 7px;
+            padding: 8px 10px;
+        }
+
+        .stat-box span {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-box b {
+            font-size: 0.88rem;
+            color: #ffffff;
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* ================= RIGHT / TOP 3D INTERACTIVE STAGE ================= */
+        #stage-3d {
+            flex-grow: 1;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #071a21;
+            touch-action: none;
+        }
+
+        #stage-3d > canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        /* Top HUD Bar */
+        #top-hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 15;
+            pointer-events: none;
+            gap: 6px;
+        }
+
+        .hud-left, .hud-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: auto;
+        }
+
+        .status-pill {
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid var(--border-glow);
+            padding: 6px 11px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-amber);
+            flex-shrink: 0;
+        }
+
+        .status-dot.running {
+            background: var(--accent-emerald);
+            box-shadow: 0 0 10px var(--accent-emerald);
+        }
+
+        .telemetry-strip {
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            display: flex;
+            gap: 11px;
+            color: var(--text-muted);
+        }
+
+        .telemetry-strip b {
+            color: #ffffff;
+        }
+
+        .btn-primary-run {
+            background: linear-gradient(135deg, var(--accent-emerald) 0%, #059669 100%);
+            border: 1.5px solid #ffffff;
+            color: #ffffff;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
+            white-space: nowrap;
+        }
+
+        .btn-primary-run.active-run {
+            background: linear-gradient(135deg, var(--accent-crimson) 0%, #991b1b 100%);
+            box-shadow: 0 4px 14px rgba(244, 63, 94, 0.45);
+        }
+
+        .btn-glass {
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid var(--border-glow);
+            color: var(--text-main);
+            padding: 7px 11px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #barrier-toast {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(245, 158, 11, 0.95);
+            border: 1.5px solid #ffffff;
+            color: #000000;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 900;
+            z-index: 25;
+            display: none;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* Bottom Camera Bar */
+        #camera-bar {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px solid var(--border-glow);
+            padding: 5px 8px;
+            border-radius: 25px;
+            display: flex;
+            gap: 4px;
+            z-index: 15;
+            flex-wrap: wrap;
+            max-width: calc(100% - 175px);
+        }
+
+        .cam-pill {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            padding: 4px 9px;
+            border-radius: 16px;
+            font-size: 0.66rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cam-pill.active-cam {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-crimson));
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        /* Bottom-Right Thruster Controller Pad */
+        #thruster-pad {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(11, 15, 25, 0.92);
+            border: 1.5px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 9px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            width: 156px;
+            touch-action: none;
+        }
+
+        .pad-header {
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-cyan);
+        }
+
+        .dpad-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 36px);
+            grid-template-rows: repeat(3, 33px);
+            gap: 4px;
+        }
+
+        .dpad-key {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+        }
+
+        .dpad-key.pressed {
+            background: linear-gradient(135deg, var(--accent-crimson), var(--accent-purple));
+            border-color: #ffffff;
+            transform: scale(0.94);
+        }
+
+        .dpad-home {
+            font-size: 0.54rem;
+            font-weight: 800;
+            background: rgba(6, 182, 212, 0.16);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .slider-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .slider-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .slider-head b {
+            color: var(--accent-cyan);
+        }
+
+        #sens-range {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+            height: 4px;
+        }
+
+        .drive-toggle {
+            display: flex;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .drive-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: var(--text-muted);
+            padding: 4px;
+            border-radius: 6px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .drive-btn.active {
+            background: var(--accent-purple);
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        /* 3D Labeled Pins Layer */
+        #pins-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 12;
+            overflow: hidden;
+        }
+
+        .pin-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pin-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-crimson) 0%, #881337 100%);
+            border: 1.5px solid #ffffff;
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 0.68rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+        }
+
+        .pin-label {
+            background: rgba(11, 15, 25, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 0.63rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .pin-node.active .pin-circle {
+            background: var(--accent-cyan);
+            color: #000000;
+            box-shadow: 0 0 14px var(--accent-cyan);
+        }
+
+        .pin-node.active .pin-label {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Field Selector Modal */
+        #lake-modal {
+            position: absolute;
+            inset: 0;
+            background: rgba(6, 9, 17, 0.88);
+            z-index: 60;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-purple);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-card h3 {
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .modal-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .modal-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .modal-field label {
+            font-size: 0.66rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+        }
+
+        .modal-field select {
+            background: #080c16;
+            border: 1.5px solid var(--border-glow);
+            color: #ffffff;
+            padding: 9px 10px;
+            border-radius: 7px;
+            font-size: 0.82rem;
+            outline: none;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .btn-apply {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-emerald), #059669);
+            border: 1.5px solid #ffffff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--text-muted);
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.76rem;
+            cursor: pointer;
+        }
+
+        /* ================= MOBILE RESPONSIVE BREAKPOINT ================= */
+        @media (max-width: 900px) {
+            #app-shell {
+                flex-direction: column-reverse;
+            }
+            #command-sidebar {
+                width: 100%;
+                min-width: unset;
+                height: 46%;
+                border-right: none;
+                border-top: 1px solid var(--border-glow);
+            }
+            #stage-3d {
+                width: 100%;
+                height: 54%;
+            }
+            .sidebar-top {
+                padding: 8px 12px 6px;
+            }
+            .sidebar-top h1 {
+                font-size: 0.95rem;
+            }
+            .telemetry-strip, .pin-label {
+                display: none;
+            }
+            .pin-circle {
+                width: 20px;
+                height: 20px;
+                font-size: 0.62rem;
+            }
+            #thruster-pad {
+                bottom: 8px;
+                right: 8px;
+                padding: 6px;
+                width: 124px;
+            }
+            .dpad-matrix {
+                grid-template-columns: repeat(3, 30px);
+                grid-template-rows: repeat(3, 27px);
+                gap: 3px;
+            }
+            .dpad-key {
+                font-size: 0.75rem;
+            }
+            #camera-bar {
+                bottom: 8px;
+                left: 8px;
+                max-width: calc(100% - 142px);
+                padding: 4px 6px;
+            }
+            .cam-pill {
+                padding: 3px 7px;
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <!-- ================= LEFT / BOTTOM COMMAND SIDEBAR ================= -->
+    <aside id="command-sidebar">
+        <div class="sidebar-top">
+            <div class="badge-row">
+                <span class="sys-tag">USV Digital Twin • Mobile & Desktop</span>
+                <span class="live-chip" id="sidebar-chip">STANDBY / IDLE</span>
+            </div>
+            <h1>AI Solar Lake Cleaning & Waste Mapping Robot</h1>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab-anatomy">1. 3D Anatomy</button>
+            <button class="tab-btn" data-tab="tab-feeds">2. AI & Sonar</button>
+            <button class="tab-btn" data-tab="tab-heatmap">3. GIS Heatmap</button>
+        </div>
+
+        <!-- TAB 1: 3D ANATOMY & COMPONENT DETAILS (1-12) -->
+        <div class="tab-pane active" id="tab-anatomy">
+            <div class="env-card">
+                <strong id="env-title">📍 Bellandur Lake Channel, Bengaluru (Idle Standby)</strong>
+                <span id="env-desc">Conveyor belt, propellers, and sonar are OFF. Tap "▶ RUN" at top-right to select a lake and start skimming floating waste.</span>
+            </div>
+
+            <div class="inspector-card">
+                <div class="inspector-head">
+                    <h2 id="part-title">Dual-Lane Inclined Mesh Conveyor Scoop</h2>
+                    <span class="num-circle" id="part-badge">5</span>
+                </div>
+                <span class="spec-pill" id="part-spec">Spec: 316 Stainless Mesh • 12V High-Torque Geared Motor</span>
+
+                <div class="info-row">
+                    <span class="info-label">What Does It Do?</span>
+                    <p class="info-body" id="part-what"></p>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Used & Uses (Hardware & Application)</span>
+                    <p class="info-body" id="part-uses"></p>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Why Is It Used?</span>
+                    <p class="info-body" id="part-why"></p>
+                </div>
+            </div>
+
+            <div class="sub-heading">Tap Any Subsystem (1–12) to Inspect:</div>
+            <div class="parts-grid" id="parts-grid"></div>
+        </div>
+
+        <!-- TAB 2: LIVE YOLOv8 AI CAMERA & UNDERWATER SONAR RADAR -->
+        <div class="tab-pane" id="tab-feeds">
+            <div class="feed-box">
+                <div class="feed-title">
+                    <span>📷 Front AI Vision (Real Camera Frustum)</span>
+                    <span id="ai-fps-status" style="color:#f59e0b;">STANDBY</span>
+                </div>
+                <canvas id="ai-cam-canvas" class="feed-canvas" width="360" height="135"></canvas>
+            </div>
+
+            <div class="feed-box">
+                <div class="feed-title">
+                    <span>📡 Ventral Scanning Imaging Sonar</span>
+                    <span style="color:#f43f5e;">DEPTH: <b id="sonar-depth-txt">2.8 m</b></span>
+                </div>
+                <canvas id="sonar-radar-canvas" class="feed-canvas" width="360" height="135"></canvas>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <span>Conveyor Belt State</span>
+                    <b id="stat-conveyor">OFF (0.0 m/s)</b>
+                </div>
+                <div class="stat-box">
+                    <span>Items Riding Belt Now</span>
+                    <b id="stat-on-belt">0 items on ramp</b>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LIVE 10m x 10m GIS WASTE HEATMAP -->
+        <div class="tab-pane" id="tab-heatmap">
+            <div class="feed-box">
+                <div class="feed-title">
+                    <span>🗺️ Geo-Tagged 10m×10m Lake Grid Heatmap</span>
+                    <span style="color:#f59e0b;">LIVE GPS LOGGING</span>
+                </div>
+                <canvas id="heatmap-canvas" width="360" height="190"></canvas>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <span>Verified Bin Payload</span>
+                    <b id="heat-count">0 items (0.00 kg)</b>
+                </div>
+                <div class="stat-box">
+                    <span>Hotspot Cells Logged</span>
+                    <b id="heat-cells">0 Active Cells</b>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ================= RIGHT / TOP 3D INTERACTIVE STAGE ================= -->
+    <main id="stage-3d">
+        <!-- Built-in 2.5D Fallback Canvas if opened offline or in a restricted mobile file viewer -->
+        <canvas id="fallback-2d-canvas" style="display:none; position:absolute; inset:0; width:100%; height:100%;"></canvas>
+
+        <div id="top-hud">
+            <div class="hud-left">
+                <div class="status-pill">
+                    <span class="status-dot" id="status-dot"></span>
+                    <span id="status-label">IDLE (BELT OFF)</span>
+                </div>
+                <div class="telemetry-strip">
+                    <span>Speed: <b id="tel-speed">0.0 m/s</b></span>
+                    <span>Conveyor: <b id="tel-conv">OFF</b></span>
+                    <span>Bin: <b id="tel-bin">0.00 kg (0)</b></span>
+                </div>
+            </div>
+
+            <div class="hud-right">
+                <button class="btn-glass" id="btn-open-lake">🛰️ Lake</button>
+                <button class="btn-primary-run" id="btn-toggle-sim">▶ RUN</button>
+            </div>
+        </div>
+
+        <div id="barrier-toast">🔄 CONTAINMENT BOOM — AUTO-PIVOT ACTIVE</div>
+
+        <!-- Bottom-Left Camera View Selector -->
+        <div id="camera-bar">
+            <button class="cam-pill active-cam" data-view="chase">Follow</button>
+            <button class="cam-pill" data-view="satellite">🛰️ Top</button>
+            <button class="cam-pill" data-view="front">Scoop</button>
+            <button class="cam-pill" data-view="sonar">Sonar</button>
+            <button class="cam-pill" data-view="labels" id="btn-toggle-labels">Labels</button>
+        </div>
+
+        <!-- Bottom-Right Thruster Controller -->
+        <div id="thruster-pad">
+            <div class="pad-header">🕹️ Thrusters</div>
+            <div class="dpad-matrix">
+                <div></div>
+                <button class="dpad-key" id="key-up">▲</button>
+                <div></div>
+                <button class="dpad-key" id="key-left">◄</button>
+                <button class="dpad-key dpad-home" id="key-home">HOME</button>
+                <button class="dpad-key" id="key-right">►</button>
+                <div></div>
+                <button class="dpad-key" id="key-down">▼</button>
+                <div></div>
+            </div>
+
+            <div class="slider-box">
+                <div class="slider-head">
+                    <span>Sens</span>
+                    <b id="sens-display">1.2x</b>
+                </div>
+                <input type="range" id="sens-range" min="0.4" max="2.5" step="0.1" value="1.2">
+            </div>
+
+            <div class="drive-toggle">
+                <button class="drive-btn" id="btn-mode-manual">Manual</button>
+                <button class="drive-btn active" id="btn-mode-auto">Auto AI</button>
+            </div>
+        </div>
+
+        <!-- 2D Projected HTML Pins Layer -->
+        <div id="pins-layer"></div>
+
+        <!-- Lake Environment Selector Modal -->
+        <div id="lake-modal">
+            <div class="modal-card">
+                <div>
+                    <span class="sys-tag">Mission Deployment Setup</span>
+                    <h3>Select Target Lake & Start</h3>
+                </div>
+                <p>Select your lake environment and control mode. Once started, the conveyor belt, rear thrusters, and sonar turn ON, and floating trash physically rides up the belt only when scooped from the water.</p>
+
+                <div class="modal-field">
+                    <label for="select-lake">1. Target Lake Environment</label>
+                    <select id="select-lake">
+                        <option value="bellandur">Bellandur Lake, Bengaluru (Dark Channel & Hyacinth Mats)</option>
+                        <option value="varthur">Varthur Lake, Bengaluru (Olive Wetland & Bottle Zones)</option>
+                        <option value="ulsoor">Ulsoor Lake, Bengaluru (Deep Emerald Channel & Litter)</option>
+                        <option value="hebbal">Hebbal Lake, Bengaluru (Slate-Blue Channel & Booms)</option>
+                    </select>
+                </div>
+
+                <div class="modal-field">
+                    <label for="select-mode">2. Thruster Navigation Mode</label>
+                    <select id="select-mode">
+                        <option value="auto">AI Autopilot (Seeks Trash & Pivots off Booms)</option>
+                        <option value="manual">Manual Controller (D-Pad or WASD / Arrows)</option>
+                    </select>
+                </div>
+
+                <div class="modal-btns">
+                    <button class="btn-close" id="btn-modal-close">Cancel</button>
+                    <button class="btn-apply" id="btn-modal-apply">🚀 Start Simulator</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Complete 1-12 Anatomy Dataset
+    var PARTS_DATA = [
+        {
+            id: 1,
+            shortName: "GPS Antenna",
+            fullName: "GPS / GNSS Navigation Antenna",
+            spec: "Spec: u-blox M9N GNSS + 9-Axis IMU Compass",
+            localPos: { x: 0.36, y: 0.97, z: 0.0 },
+            what: "Receives real-time multi-constellation satellite signals and 9-axis IMU heading data for autonomous waypoint navigation and geo-tagging.",
+            uses: "Mounted at the highest point of the mast for unobstructed sky view. Used for lawn-mower patrol routing, channel geofencing, and logging the exact coordinates of every trash detection.",
+            why: "Essential for human-free autonomous lake patrol, automatic return-to-dock on low battery, and generating accurate GIS pollution heatmaps."
+        },
+        {
+            id: 2,
+            shortName: "AI Camera",
+            fullName: "AI Computer Vision Camera",
+            spec: "Spec: 1080p IP67 Polarized Camera • YOLOv8 Edge",
+            localPos: { x: 0.42, y: 0.81, z: 0.0 },
+            what: "Captures live 1080p forward video frames and feeds them to the onboard edge AI model (YOLOv8) to detect and classify floating waste in real time.",
+            uses: "Uses a waterproof HD camera with polarizing glare filter mounted on the front mast. Used to identify plastic bottles, polythene bags, wrappers, and water hyacinth clumps.",
+            why: "Allows the robot to actively spot, classify, and steer directly toward floating trash clusters rather than sweeping empty water."
+        },
+        {
+            id: 3,
+            shortName: "LiDAR Sensor",
+            fullName: "360° LiDAR & Ultrasonic Obstacle Sensor",
+            spec: "Spec: 360° Rotary Laser Scanner + Waterproof Sonar",
+            localPos: { x: 0.36, y: 0.87, z: 0.08 },
+            what: "Continuously scans the surrounding water channel and floating boom barriers to measure obstacle distance and trigger smooth pivot steering.",
+            uses: "Uses a 360-degree scanning LiDAR puck paired with waterproof ultrasonic rangefinders. Used to detect containment booms, encroaching hyacinth mats, bund walls, and boats.",
+            why: "Prevents the robot from getting stuck in dense shore vegetation or colliding with containment barriers during unsupervised missions."
+        },
+        {
+            id: 4,
+            shortName: "Solar Panels",
+            fullName: "Monocrystalline Solar Panel Array",
+            spec: "Spec: 2 × 100W Monocrystalline PV Canopy",
+            localPos: { x: -0.05, y: 0.72, z: 0.18 },
+            what: "Converts sunlight directly into DC electrical power to charge the onboard battery bank and run the thrusters, conveyor, and AI computer.",
+            uses: "High-efficiency monocrystalline photovoltaic modules mounted on an anodized aluminum canopy frame. Used to provide continuous clean daytime energy and shade the internal electronics.",
+            why: "Eliminates fossil-fuel emissions, noise pollution, and fuel costs while extending daily mission endurance on large lakes."
+        },
+        {
+            id: 5,
+            shortName: "Conveyor Scoop",
+            fullName: "Dual-Lane Inclined Mesh Conveyor Scoop",
+            spec: "Spec: 316 Stainless Open Mesh • 12V Geared Motor",
+            localPos: { x: 0.38, y: 0.22, z: 0.0 },
+            what: "Scoops floating solid waste from the water surface when the simulator is running and conveys it up the inclined ramp into the central storage bin.",
+            uses: "Corrosion-resistant stainless-steel open-mesh belt with raised cleat flights and side sprockets. Only carries bottles or weeds when they are physically scooped from the water in front.",
+            why: "Provides on-demand, automated mechanical skimming without clogging or lifting heavy water weight into the boat."
+        },
+        {
+            id: 6,
+            shortName: "Guide Barriers",
+            fullName: "Front Intake Guide Barriers (Deflector Wings)",
+            spec: "Spec: Angled Aluminum Wings + High-Vis Bumpers",
+            localPos: { x: 0.68, y: 0.16, z: 0.28 },
+            what: "Funnel-shaped front deflector wings that widen the robot's effective sweeping width and channel floating trash onto the conveyor belt.",
+            uses: "Angled HDPE/aluminum guide plates with high-visibility yellow bumper strips extending forward from both catamaran bows. Used to guide drifting bottles and weeds into the intake mouth.",
+            why: "Increases single-pass collection efficiency and prevents floating debris from being pushed away by the bow wave."
+        },
+        {
+            id: 7,
+            shortName: "Collection Bin",
+            fullName: "Perforated Stainless Steel Waste Collection Bin",
+            spec: "Spec: 45L Perforated Basket + Ultrasonic Level Sensor",
+            localPos: { x: -0.08, y: 0.40, z: 0.0 },
+            what: "Receives and stores solid waste discharged from the top of the front conveyor belt as items are collected from the lake.",
+            uses: "Removable perforated stainless-steel wire mesh basket located at the center of gravity between the hulls. Starts empty and fills up as real items ride up the conveyor.",
+            why: "Keeps the catamaran balanced as waste accumulates, allows residual water to drain out, and enables quick dock emptying."
+        },
+        {
+            id: 8,
+            shortName: "Propeller Thrusters",
+            fullName: "Twin Shrouded Underwater Propeller Thrusters",
+            spec: "Spec: 2 × 12V Brushless Thrusters + Weed Guards",
+            localPos: { x: -0.62, y: 0.06, z: 0.36 },
+            what: "Provides forward/reverse propulsion and differential-thrust steering to maneuver and pivot the catamaran on the spot.",
+            uses: "Two 12V brushless underwater thrusters with electronic speed controllers (ESCs) and protective safety shrouds mounted under the rear of both hulls.",
+            why: "Differential thrust enables instant zero-radius turns away from barriers without rudders, while shrouds block weeds from tangling the blades."
+        },
+        {
+            id: 9,
+            shortName: "Underwater Sonar",
+            fullName: "Underwater Camera & Scanning Imaging Sonar Pod",
+            spec: "Spec: Side-Scan Sonar + 1080p Low-Light LED Camera",
+            localPos: { x: -0.05, y: -0.14, z: 0.0 },
+            what: "Inspects submerged water conditions, detects sunken debris, measures water depth, and maps the lakebed profile when deployed.",
+            uses: "Waterproof 1080p low-light camera with dual LED lamps, pressure depth sensor, and scanning imaging sonar mounted on a motorized drop-strut beneath the center hull.",
+            why: "Surface cameras cannot see through dark lake water; combining underwater vision and sonar reveals submerged plastic accumulation zones."
+        },
+        {
+            id: 10,
+            shortName: "Floating Hulls",
+            fullName: "Twin Catamaran Floating Hulls (HDPE / Marine Alu)",
+            spec: "Spec: 1.15m × 0.86m Twin Pontoon Catamaran",
+            localPos: { x: 0.15, y: 0.14, z: 0.38 },
+            what: "Provides high buoyancy, hydrodynamic stability, and a wide deck platform to support the conveyor, bin, and solar canopy.",
+            uses: "Twin sealed, impact-resistant pontoons with faceted bows and nonslip deck tread plates bridged by an extruded aluminum T-slot frame.",
+            why: "A twin-hull catamaran layout prevents capsizing, offers shallow draft near wetland edges, and leaves an open center channel for the front conveyor scoop."
+        },
+        {
+            id: 11,
+            shortName: "Control & AI Box",
+            fullName: "Control & Edge AI Electronics Enclosure",
+            spec: "Spec: NVIDIA Jetson Nano + Pixhawk Autopilot (IP67)",
+            localPos: { x: -0.36, y: 0.44, z: -0.32 },
+            what: "Processes camera, LiDAR, GPS, and sonar data, runs the YOLO deep-learning waste detector, and commands the thrusters and conveyor motor.",
+            uses: "IP67 waterproof enclosure with external heatsink fins and cable glands housing the Jetson/Raspberry Pi 5, Pixhawk boat controller, ESCs, and 4G/Wi-Fi telemetry.",
+            why: "Centralizes all autonomous decision-making onboard so the robot can detect trash, avoid shoreline barriers, and log heatmaps in real time."
+        },
+        {
+            id: 12,
+            shortName: "Battery & MPPT",
+            fullName: "LiFePO4 Battery Pack & MPPT Power System",
+            spec: "Spec: 12.8V 30Ah LiFePO4 + 20A MPPT Controller",
+            localPos: { x: -0.36, y: 0.44, z: 0.32 },
+            what: "Stores solar energy and delivers regulated 12V/5V DC power to all thrusters, motors, sensors, and onboard computers.",
+            uses: "12.8V 30Ah LiFePO4 battery bank, 20A MPPT solar charge controller, fused distribution bus, and emergency stop circuit inside a sealed waterproof housing.",
+            why: "Ensures 4–6+ hours of continuous operation even during cloudy periods, with MPPT tracking maximizing solar harvest efficiency."
+        }
+    ];
+
+    var LAKE_PROFILES = {
+        bellandur: {
+            title: "📍 Bellandur Lake Channel, Bengaluru",
+            desc: "Dark open-water channel flanked by dense water hyacinth mats, concrete docking jetty, bund roads, and floating containment booms.",
+            waterColor: 0x061c24,
+            fogColor: 0x9cb4c9,
+            depth: "2.8 m"
+        },
+        varthur: {
+            title: "📍 Varthur Lake Channel, Bengaluru",
+            desc: "Olive-green wetland channel bordered by floating macrophyte mats, containment booms, and rural bund embankments.",
+            waterColor: 0x0b261e,
+            fogColor: 0xa5bab0,
+            depth: "2.2 m"
+        },
+        ulsoor: {
+            title: "📍 Ulsoor Lake Channel, Bengaluru",
+            desc: "Deep emerald lake channel with island vegetation edges, floating barrier booms, and urban plastic bottle litter.",
+            waterColor: 0x072833,
+            fogColor: 0x95b3c4,
+            depth: "3.4 m"
+        },
+        hebbal: {
+            title: "📍 Hebbal Lake Channel, Bengaluru",
+            desc: "Slate-blue open channel flanked by wetland reed beds, containment booms, and floating plastic accumulation zones.",
+            waterColor: 0x092236,
+            fogColor: 0x9cb0c7,
+            depth: "3.1 m"
+        }
+    };
+
+    // Global State — Starts OFF/IDLE so conveyor & propellers do NOT run until started!
+    var isSimRunning = false;
+    var hasConfiguredLake = false;
+    var driveMode = 'auto';
+    var controllerSens = 1.2;
+    var labelsVisible = true;
+    var collectedKg = 0.0;
+    var collectedCount = 0;
+    var activeHotspotCells = 0;
+    var using2DFallback = false;
+
+    var CHANNEL_SAFE_X = 6.2;
+    var CHANNEL_SAFE_Z = 4.6;
+
+    var boatState = {
+        x: 0.0,
+        z: 0.0,
+        heading: 0.25,
+        speed: 0.0,
+        turnRate: 0.0,
+        pitch: 0.0,
+        roll: 0.0
+    };
+
+    var inputKeys = { up: false, down: false, left: false, right: false };
+
+    var HEAT_COLS = 12;
+    var HEAT_ROWS = 8;
+    var heatmapGrid = [];
+    for (var hr = 0; hr < HEAT_ROWS; hr++) {
+        heatmapGrid.push(new Array(HEAT_COLS).fill(0));
+    }
+
+    // DOM References
+    var stageEl = document.getElementById('stage-3d');
+    var pinsLayerEl = document.getElementById('pins-layer');
+    var partsGridEl = document.getElementById('parts-grid');
+    var btnToggleSim = document.getElementById('btn-toggle-sim');
+    var btnOpenLake = document.getElementById('btn-open-lake');
+    var lakeModal = document.getElementById('lake-modal');
+    var btnModalApply = document.getElementById('btn-modal-apply');
+    var btnModalClose = document.getElementById('btn-modal-close');
+    var statusDot = document.getElementById('status-dot');
+    var statusLabel = document.getElementById('status-label');
+    var sidebarChip = document.getElementById('sidebar-chip');
+    var barrierToast = document.getElementById('barrier-toast');
+    var btnModeManual = document.getElementById('btn-mode-manual');
+    var btnModeAuto = document.getElementById('btn-mode-auto');
+    var sensRange = document.getElementById('sens-range');
+    var sensDisplay = document.getElementById('sens-display');
+
+    // Three.js Globals
+    var scene, camera, renderer, controls;
+    var robotRoot, convGroup, lidarRotor, sonarDropGroup, waterMesh, bowWakeMesh;
+    var beltTexture, waterNormalTex;
+    var propBlades = [];
+    var conveyorRollers = [];
+    var conveyorCleats = [];
+    var floatingDebrisList = [];
+    var wakeParticles = [];
+    var sonarPulseRings = [];
+    var binStoredMeshes = [];
+
+    // Sidebar Tabs Switching
+    var tabButtons = document.querySelectorAll('.tab-btn');
+    for (var tb = 0; tb < tabButtons.length; tb++) {
+        tabButtons[tb].addEventListener('click', function () {
+            for (var i = 0; i < tabButtons.length; i++) tabButtons[i].classList.remove('active');
+            var panes = document.querySelectorAll('.tab-pane');
+            for (var j = 0; j < panes.length; j++) panes[j].classList.remove('active');
+            this.classList.add('active');
+            var targetId = this.getAttribute('data-tab');
+            document.getElementById(targetId).classList.add('active');
+        });
+    }
+
+    // Mobile-Optimized Procedural Textures (Fast 512px canvases so mobile never hangs)
+    function createSatelliteLakeTexture() {
+        var c = document.createElement('canvas');
+        c.width = 512;
+        c.height = 512;
+        var ctx = c.getContext('2d');
+
+        ctx.fillStyle = '#123315';
+        ctx.fillRect(0, 0, 512, 512);
+
+        var greens = ['#0c240e', '#163d1a', '#1e4f22', '#28632c', '#112e14', '#314c26', '#43572d'];
+        for (var i = 0; i < 900; i++) {
+            var gx = Math.random() * 512;
+            var gz = Math.random() * 512;
+            var rad = 3 + Math.random() * 14;
+            ctx.fillStyle = greens[i % greens.length];
+            ctx.beginPath();
+            ctx.arc(gx, gz, rad, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Bund paths on left and right
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(44, 0);
+        ctx.bezierCurveTo(70, 160, 60, 340, 104, 512);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#a89078';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(472, 0);
+        ctx.bezierCurveTo(460, 200, 480, 350, 468, 512);
+        ctx.stroke();
+
+        var mudGrad = ctx.createRadialGradient(256, 256, 120, 256, 256, 178);
+        mudGrad.addColorStop(0, '#041116');
+        mudGrad.addColorStop(0.75, '#071d24');
+        mudGrad.addColorStop(0.92, '#1a3320');
+        mudGrad.addColorStop(1, 'rgba(18, 51, 21, 0)');
+        ctx.fillStyle = mudGrad;
+        ctx.beginPath();
+        ctx.ellipse(256, 256, 175, 139, 0.15, 0, Math.PI * 2);
+        ctx.fill();
+
+        return new THREE.CanvasTexture(c);
+    }
+
+    function createRealisticSkyTexture() {
+        var c = document.createElement('canvas');
+        c.width = 1024;
+        c.height = 256;
+        var ctx = c.getContext('2d');
+
+        var skyGrad = ctx.createLinearGradient(0, 0, 0, 195);
+        skyGrad.addColorStop(0, '#134074');
+        skyGrad.addColorStop(0.4, '#3b7bba');
+        skyGrad.addColorStop(0.78, '#9ec5e6');
+        skyGrad.addColorStop(1, '#e0f2fe');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, 1024, 198);
+
+        // Sun glow
+        var sunGlow = ctx.createRadialGradient(210, 58, 4, 210, 58, 85);
+        sunGlow.addColorStop(0, 'rgba(255, 255, 240, 0.95)');
+        sunGlow.addColorStop(0.25, 'rgba(254, 243, 199, 0.6)');
+        sunGlow.addColorStop(1, 'rgba(254, 243, 199, 0)');
+        ctx.fillStyle = sunGlow;
+        ctx.beginPath();
+        ctx.arc(210, 58, 85, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Clouds
+        for (var i = 0; i < 40; i++) {
+            var cx = (i * 29) % 1024;
+            var cy = 40 + (i % 5) * 19;
+            var rx = 35 + (i % 4) * 18;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, rx, 7, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Distant skyline & treeline
+        for (var b = 0; b < 65; b++) {
+            var bx = b * 16;
+            var bw = 6 + (b % 4) * 3;
+            var bh = 8 + ((b * 13) % 22);
+            ctx.fillStyle = 'rgba(148, 163, 184, 0.5)';
+            ctx.fillRect(bx, 192 - bh, bw, bh);
+        }
+
+        ctx.fillStyle = '#123315';
+        ctx.fillRect(0, 190, 1024, 66);
+
+        return new THREE.CanvasTexture(c);
+    }
+
+    function createWaterRippleTexture() {
+        var c = document.createElement('canvas');
+        c.width = 128;
+        c.height = 128;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#808080';
+        ctx.fillRect(0, 0, 128, 128);
+        for (var i = 0; i < 160; i++) {
+            ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.14)';
+            ctx.beginPath();
+            ctx.ellipse(Math.random() * 128, Math.random() * 128, 8, 2, 0.15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        var tex = new THREE.CanvasTexture(c);
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(18, 18);
+        return tex;
+    }
+
+    function createSolarPanelTexture() {
+        var c = document.createElement('canvas');
+        c.width = 256;
+        c.height = 256;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#07142b';
+        ctx.fillRect(0, 0, 256, 256);
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        var cols = 6, rows = 10;
+        var cw = 256 / cols, ch = 256 / rows;
+        for (var i = 0; i <= cols; i++) {
+            ctx.beginPath(); ctx.moveTo(i * cw, 0); ctx.lineTo(i * cw, 256); ctx.stroke();
+        }
+        for (var j = 0; j <= rows; j++) {
+            ctx.beginPath(); ctx.moveTo(0, j * ch); ctx.lineTo(256, j * ch); ctx.stroke();
+        }
+        return new THREE.CanvasTexture(c);
+    }
+
+    function createMeshBeltTexture() {
+        var c = document.createElement('canvas');
+        c.width = 128;
+        c.height = 128;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#273549';
+        ctx.fillRect(0, 0, 128, 128);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.5;
+        for (var i = 0; i <= 128; i += 16) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 128); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(128, i); ctx.stroke();
+        }
+        var tex = new THREE.CanvasTexture(c);
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(3, 6);
+        return tex;
+    }
+
+    function bootApplication() {
+        buildUIAndPins();
+        setupControllerEvents();
+        selectPart(5, false);
+        updateHUDStatus();
+
+        // Check if Three.js loaded and WebGL is supported on this mobile viewer
+        if (typeof window.THREE === 'undefined' || typeof window.THREE.OrbitControls === 'undefined') {
+            start2DFallbackEngine();
+            return;
+        }
+
+        try {
+            init3DScene();
+        } catch (err) {
+            console.warn("Mobile WebGL fallback triggered:", err);
+            start2DFallbackEngine();
+        }
+    }
+
+    function init3DScene() {
+        var w = stageEl.clientWidth || window.innerWidth || 360;
+        var h = stageEl.clientHeight || Math.round(window.innerHeight * 0.54) || 320;
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x9cb4c9);
+        scene.fog = new THREE.FogExp2(0x9cb4c9, 0.013);
+
+        camera = new THREE.PerspectiveCamera(44, w / h, 0.05, 120);
+        camera.position.set(1.85, 1.18, 1.55);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "default" });
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        stageEl.appendChild(renderer.domElement);
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.rotateSpeed = 0.75;
+        controls.zoomSpeed = 0.9;
+        controls.panSpeed = 0.7;
+        controls.minDistance = 0.65;
+        controls.maxDistance = 20.0;
+        controls.maxPolarAngle = Math.PI / 2 + 0.12;
+        controls.target.set(0.1, 0.26, 0.0);
+
+        // Mobile-Safe Multi-Directional Lighting (Zero PMREMGenerator shader crash!)
+        var hemiLight = new THREE.HemisphereLight(0xe0f2fe, 0x123315, 1.15);
+        scene.add(hemiLight);
+
+        var sunLight = new THREE.DirectionalLight(0xfffbeb, 1.25);
+        sunLight.position.set(8, 15, 7);
+        scene.add(sunLight);
+
+        var fillLight = new THREE.DirectionalLight(0x38bdf8, 0.55);
+        fillLight.position.set(-7, 5, -6);
+        scene.add(fillLight);
+
+        buildSatelliteWetlandEnvironment();
+        buildRobotModel();
+        buildEnvironmentDebrisAndEffects();
+        animateLoop();
+    }
+
+    function buildSatelliteWetlandEnvironment() {
+        var skyGeo = new THREE.CylinderGeometry(45, 45, 30, 36, 1, true);
+        var skyMat = new THREE.MeshBasicMaterial({ map: createRealisticSkyTexture(), side: THREE.BackSide, fog: false });
+        var skyDome = new THREE.Mesh(skyGeo, skyMat);
+        skyDome.position.y = 11;
+        scene.add(skyDome);
+
+        var satPlane = new THREE.Mesh(
+            new THREE.PlaneGeometry(44, 44, 1, 1),
+            new THREE.MeshStandardMaterial({ map: createSatelliteLakeTexture(), roughness: 0.85, metalness: 0.05 })
+        );
+        satPlane.rotation.x = -Math.PI / 2;
+        satPlane.position.y = 0.06;
+        scene.add(satPlane);
+
+        waterNormalTex = createWaterRippleTexture();
+        waterMesh = new THREE.Mesh(
+            new THREE.CircleGeometry(11.2, 48),
+            new THREE.MeshStandardMaterial({
+                color: 0x061c24,
+                bumpMap: waterNormalTex,
+                bumpScale: 0.012,
+                roughness: 0.16,
+                metalness: 0.45,
+                transparent: true,
+                opacity: 0.90,
+                side: THREE.DoubleSide
+            })
+        );
+        waterMesh.rotation.x = -Math.PI / 2;
+        waterMesh.position.y = 0.08;
+        scene.add(waterMesh);
+
+        var bedMesh = new THREE.Mesh(
+            new THREE.CircleGeometry(11.5, 24),
+            new THREE.MeshStandardMaterial({ color: 0x030b0e, roughness: 0.95 })
+        );
+        bedMesh.rotation.x = -Math.PI / 2;
+        bedMesh.position.y = -0.65;
+        scene.add(bedMesh);
+
+        // Western Bund Docking Jetty
+        var jettyGroup = new THREE.Group();
+        jettyGroup.position.set(-(CHANNEL_SAFE_X + 0.9), 0.18, 0);
+        var jettyDeck = new THREE.Mesh(
+            new THREE.BoxGeometry(1.5, 0.12, 1.2),
+            new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.7 })
+        );
+        jettyGroup.add(jettyDeck);
+        scene.add(jettyGroup);
+
+        // Floating Containment Booms & Hyacinth Mats
+        var matHyacinthDark = new THREE.MeshStandardMaterial({ color: 0x163d1a, roughness: 0.88 });
+        var matHyacinthMid = new THREE.MeshStandardMaterial({ color: 0x225c27, roughness: 0.84 });
+        var boomSegments = 36;
+
+        for (var i = 0; i < boomSegments; i++) {
+            var ang = (i / boomSegments) * Math.PI * 2;
+            var nextAng = ((i + 1) / boomSegments) * Math.PI * 2;
+            var midAng = (ang + nextAng) / 2;
+
+            var bx = Math.cos(midAng) * (CHANNEL_SAFE_X + 0.65);
+            var bz = Math.sin(midAng) * (CHANNEL_SAFE_Z + 0.65);
+
+            var boom = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.05, 0.05, 0.85, 10),
+                new THREE.MeshStandardMaterial({ color: i % 2 === 0 ? 0xf97316 : 0xfacc15, roughness: 0.3 })
+            );
+            boom.position.set(bx, 0.09, bz);
+            boom.rotation.z = Math.PI / 2;
+            boom.rotation.y = -midAng;
+            scene.add(boom);
+
+            for (var m = 0; m < 2; m++) {
+                var distMult = 1.16 + m * 0.2;
+                var hx = Math.cos(midAng) * (CHANNEL_SAFE_X * distMult);
+                var hz = Math.sin(midAng) * (CHANNEL_SAFE_Z * distMult);
+                var pad = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.7, 0.75, 0.06, 8),
+                    (i + m) % 2 === 0 ? matHyacinthDark : matHyacinthMid
+                );
+                pad.position.set(hx, 0.09, hz);
+                scene.add(pad);
+            }
+        }
+    }
+
+    function buildRobotModel() {
+        robotRoot = new THREE.Group();
+        scene.add(robotRoot);
+
+        var matHullAlu = new THREE.MeshStandardMaterial({ color: 0xdbe4ee, metalness: 0.55, roughness: 0.3 });
+        var matHullTrim = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.3, roughness: 0.4 });
+        var matRedAccent = new THREE.MeshStandardMaterial({ color: 0xe11d48, metalness: 0.4, roughness: 0.3 });
+        var matAluFrame = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.7, roughness: 0.25 });
+        var matDarkSteel = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.6, roughness: 0.35 });
+        var matYellowSafety = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.3 });
+        var matEnclosure = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.4, roughness: 0.3 });
+        var matWhiteSensor = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+
+        beltTexture = createMeshBeltTexture();
+        var matConveyorBelt = new THREE.MeshStandardMaterial({ map: beltTexture, metalness: 0.5, roughness: 0.4 });
+        var matSolarCell = new THREE.MeshStandardMaterial({ map: createSolarPanelTexture(), metalness: 0.5, roughness: 0.15 });
+
+        // 10. Twin Catamaran Hulls
+        [-1, 1].forEach(function (side) {
+            var zOff = side * 0.36;
+            var hullGroup = new THREE.Group();
+            hullGroup.position.set(0, 0.13, zOff);
+
+            var mainBody = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.14, 0.18), matHullAlu);
+            hullGroup.add(mainBody);
+
+            var lowerStripe = new THREE.Mesh(new THREE.BoxGeometry(1.13, 0.045, 0.185), matHullTrim);
+            lowerStripe.position.y = -0.045;
+            hullGroup.add(lowerStripe);
+
+            var bowCone = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.28, 4), matHullAlu);
+            bowCone.rotation.z = -Math.PI / 2;
+            bowCone.rotation.x = Math.PI / 4;
+            bowCone.position.set(0.70, 0.0, 0.0);
+            hullGroup.add(bowCone);
+
+            robotRoot.add(hullGroup);
+        });
+
+        // V-Shaped Bow Wave
+        var bowWakeGeo = new THREE.RingGeometry(0.35, 0.52, 20, 1, -Math.PI / 3, (2 * Math.PI) / 3);
+        var bowWakeMat = new THREE.MeshBasicMaterial({ color: 0xe0f2fe, transparent: true, opacity: 0.0, side: THREE.DoubleSide });
+        bowWakeMesh = new THREE.Mesh(bowWakeGeo, bowWakeMat);
+        bowWakeMesh.rotation.x = -Math.PI / 2;
+        bowWakeMesh.position.set(0.45, 0.084, 0);
+        robotRoot.add(bowWakeMesh);
+
+        // Bridge Frame & Pillars
+        [-0.46, -0.12, 0.24].forEach(function (bx) {
+            var beam = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, 0.86), matAluFrame);
+            beam.position.set(bx, 0.22, 0.0);
+            robotRoot.add(beam);
+        });
+
+        [-1, 1].forEach(function (side) {
+            var sideRail = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.045, 0.045), matAluFrame);
+            sideRail.position.set(-0.11, 0.22, side * 0.34);
+            robotRoot.add(sideRail);
+
+            var topRail = new THREE.Mesh(new THREE.BoxGeometry(0.76, 0.04, 0.04), matAluFrame);
+            topRail.position.set(-0.08, 0.67, side * 0.32);
+            robotRoot.add(topRail);
+        });
+
+        [[-0.44, -0.32], [-0.44, 0.32], [0.24, -0.32], [0.24, 0.32]].forEach(function (pair) {
+            var pillar = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.45, 0.04), matAluFrame);
+            pillar.position.set(pair[0], 0.445, pair[1]);
+            robotRoot.add(pillar);
+        });
+
+        // 5. Dual-Lane Inclined Mesh Conveyor Scoop (Starts 100% CLEAN — No pre-attached bottles!)
+        convGroup = new THREE.Group();
+        convGroup.position.set(0.36, 0.22, 0.0);
+        convGroup.rotation.z = -24 * (Math.PI / 180);
+        robotRoot.add(convGroup);
+
+        [-1, 1].forEach(function (lane) {
+            var beltLane = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.035, 0.19), matConveyorBelt);
+            beltLane.position.set(0, 0, lane * 0.105);
+            convGroup.add(beltLane);
+        });
+
+        [-0.21, 0.0, 0.21].forEach(function (zPos) {
+            var wall = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.075, 0.015), matAluFrame);
+            wall.position.set(0, 0.02, zPos);
+            convGroup.add(wall);
+        });
+
+        [-0.30, 0.30].forEach(function (rx) {
+            var roller = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.42, 14), matDarkSteel);
+            roller.rotation.x = Math.PI / 2;
+            roller.position.set(rx, 0, 0);
+            convGroup.add(roller);
+            conveyorRollers.push(roller);
+        });
+
+        for (var i = 0; i < 10; i++) {
+            var cleatHolder = new THREE.Group();
+            cleatHolder.position.set(0.30 - (i * 0.062), 0.024, 0);
+            var cleatBar = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.016, 0.40), matAluFrame);
+            cleatHolder.add(cleatBar);
+            convGroup.add(cleatHolder);
+            conveyorCleats.push(cleatHolder);
+        }
+
+        // 6. Front Guide Barriers
+        [-1, 1].forEach(function (side) {
+            var barrierGroup = new THREE.Group();
+            barrierGroup.position.set(0.66, 0.14, side * 0.25);
+            barrierGroup.rotation.y = side * 14 * (Math.PI / 180);
+
+            var wingPlate = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.09, 0.018), matDarkSteel);
+            barrierGroup.add(wingPlate);
+
+            var topBumper = new THREE.Mesh(new THREE.BoxGeometry(0.265, 0.022, 0.024), matYellowSafety);
+            topBumper.position.y = 0.045;
+            barrierGroup.add(topBumper);
+
+            robotRoot.add(barrierGroup);
+        });
+
+        // 7. Perforated Mesh Waste Collection Bin (Starts Empty)
+        var binGroup = new THREE.Group();
+        binGroup.position.set(-0.08, 0.36, 0.0);
+        robotRoot.add(binGroup);
+
+        var binMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(0.38, 0.22, 0.44),
+            new THREE.MeshStandardMaterial({ color: 0xe2e8f0, wireframe: true })
+        );
+        binGroup.add(binMesh);
+
+        var binInner = new THREE.Mesh(
+            new THREE.BoxGeometry(0.375, 0.215, 0.435),
+            new THREE.MeshStandardMaterial({ color: 0x475569, transparent: true, opacity: 0.38, side: THREE.DoubleSide })
+        );
+        binGroup.add(binInner);
+
+        var binColors = [0x38bdf8, 0x22c55e, 0xf43f5e, 0xfacc15, 0xffffff, 0x16a34a];
+        for (var b = 0; b < 24; b++) {
+            var piece = new THREE.Mesh(
+                b % 2 === 0 ? new THREE.CylinderGeometry(0.02, 0.02, 0.07, 8) : new THREE.DodecahedronGeometry(0.032, 0),
+                new THREE.MeshStandardMaterial({ color: binColors[b % binColors.length], roughness: 0.4 })
+            );
+            piece.position.set((Math.random() - 0.5) * 0.28, -0.08 + (b * 0.006), (Math.random() - 0.5) * 0.32);
+            piece.visible = false;
+            binGroup.add(piece);
+            binStoredMeshes.push(piece);
+        }
+
+        // 11 & 12. Side Control & Battery Enclosures
+        [-1, 1].forEach(function (side) {
+            var boxGroup = new THREE.Group();
+            boxGroup.position.set(-0.34, 0.43, side * 0.31);
+            var cabinet = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.24, 0.12), matEnclosure);
+            boxGroup.add(cabinet);
+            var strip = new THREE.Mesh(new THREE.BoxGeometry(0.245, 0.03, 0.125), side < 0 ? matRedAccent : matHullTrim);
+            strip.position.y = 0.07;
+            boxGroup.add(strip);
+            robotRoot.add(boxGroup);
+        });
+
+        // 4. Overhead Solar Panel Canopy
+        var roofGroup = new THREE.Group();
+        roofGroup.position.set(-0.04, 0.70, 0.0);
+        robotRoot.add(roofGroup);
+
+        var roofFrame = new THREE.Mesh(new THREE.BoxGeometry(0.96, 0.03, 0.88), matAluFrame);
+        roofGroup.add(roofFrame);
+
+        [-1, 1].forEach(function (sx) {
+            [-1, 1].forEach(function (sz) {
+                var panel = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.012, 0.41), matSolarCell);
+                panel.position.set(sx * 0.23, 0.016, sz * 0.21);
+                roofGroup.add(panel);
+            });
+        });
+
+        // Front Sensor Mast (1: GPS, 2: AI Camera, 3: LiDAR)
+        var mastPost = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.26, 0.035), matAluFrame);
+        mastPost.position.set(0.36, 0.82, 0.0);
+        robotRoot.add(mastPost);
+
+        var gpsDome = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.055, 0.03, 16), matWhiteSensor);
+        gpsDome.position.set(0.36, 0.96, 0.0);
+        robotRoot.add(gpsDome);
+
+        var camHousing = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.06, 0.095), matWhiteSensor);
+        camHousing.position.set(0.41, 0.81, 0.0);
+        robotRoot.add(camHousing);
+
+        var camLens = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.02, 12), matDarkSteel);
+        camLens.rotation.z = Math.PI / 2;
+        camLens.position.set(0.45, 0.81, 0.0);
+        robotRoot.add(camLens);
+
+        var lidarMount = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.015, 0.16), matAluFrame);
+        lidarMount.position.set(0.36, 0.84, 0.0);
+        robotRoot.add(lidarMount);
+
+        lidarRotor = new THREE.Mesh(new THREE.CylinderGeometry(0.034, 0.034, 0.045, 16), matDarkSteel);
+        lidarRotor.position.set(0.36, 0.87, 0.07);
+        robotRoot.add(lidarRotor);
+
+        var beaconLight = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.018, 0.02, 0.04, 10),
+            new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xf59e0b, emissiveIntensity: 0.7 })
+        );
+        beaconLight.position.set(0.36, 0.87, -0.07);
+        robotRoot.add(beaconLight);
+
+        // 8. Twin Rear Shrouded Propeller Thrusters
+        [-1, 1].forEach(function (side) {
+            var thrusterGroup = new THREE.Group();
+            thrusterGroup.position.set(-0.60, 0.05, side * 0.36);
+
+            var strut = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.08, 0.02), matDarkSteel);
+            strut.position.set(0.04, 0.04, 0);
+            thrusterGroup.add(strut);
+
+            var pod = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, 0.13, 12), matDarkSteel);
+            pod.rotation.z = Math.PI / 2;
+            thrusterGroup.add(pod);
+
+            var shroud = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.058, 0.058, 0.065, 16, 1, true),
+                new THREE.MeshStandardMaterial({ color: 0xe11d48, side: THREE.DoubleSide })
+            );
+            shroud.rotation.z = Math.PI / 2;
+            shroud.position.x = -0.045;
+            thrusterGroup.add(shroud);
+
+            var propHub = new THREE.Group();
+            propHub.position.set(-0.045, 0, 0);
+
+            for (var b = 0; b < 3; b++) {
+                var bladePivot = new THREE.Group();
+                bladePivot.rotation.x = (b * 120) * (Math.PI / 180);
+                var blade = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.008, 0.046, 0.018),
+                    new THREE.MeshStandardMaterial({ color: 0x38bdf8 })
+                );
+                blade.position.y = 0.025;
+                blade.rotation.y = 0.35;
+                bladePivot.add(blade);
+                propHub.add(bladePivot);
+            }
+
+            thrusterGroup.add(propHub);
+            propBlades.push(propHub);
+            robotRoot.add(thrusterGroup);
+        });
+
+        // 9. Underwater Camera & Imaging Sonar Pod
+        sonarDropGroup = new THREE.Group();
+        sonarDropGroup.position.set(-0.05, 0.0, 0.0);
+        robotRoot.add(sonarDropGroup);
+
+        var sonarStrut = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.30, 10), matAluFrame);
+        sonarStrut.position.y = 0.06;
+        sonarDropGroup.add(sonarStrut);
+
+        var sonarPodBody = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.18, 12), matDarkSteel);
+        sonarPodBody.rotation.z = Math.PI / 2;
+        sonarPodBody.position.y = -0.09;
+        sonarDropGroup.add(sonarPodBody);
+
+        var sonarTransducer = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.038, 0.038, 0.03, 12),
+            new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xf43f5e, emissiveIntensity: 0.5 })
+        );
+        sonarTransducer.position.y = -0.12;
+        sonarDropGroup.add(sonarTransducer);
+    }
+
+    function spawnDebrisPosition() {
+        var ang = Math.random() * Math.PI * 2;
+        var r = 0.25 + Math.random() * 0.58;
+        return {
+            x: Math.cos(ang) * (CHANNEL_SAFE_X * r),
+            z: Math.sin(ang) * (CHANNEL_SAFE_Z * r)
+        };
+    }
+
+    function buildEnvironmentDebrisAndEffects() {
+        var bottleMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2 });
+        var greenBottleMat = new THREE.MeshStandardMaterial({ color: 0x4ade80, roughness: 0.2 });
+        var weedMat = new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.85 });
+        var wrapperMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.35 });
+
+        for (var i = 0; i < 32; i++) {
+            var type = i % 4;
+            var mesh, label, weightKg;
+            if (type === 0) {
+                mesh = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.085, 8), bottleMat);
+                mesh.rotation.z = Math.PI / 2;
+                label = "PET_BOTTLE";
+                weightKg = 0.08;
+            } else if (type === 1) {
+                mesh = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.085, 8), greenBottleMat);
+                mesh.rotation.z = Math.PI / 2;
+                label = "PLASTIC_CAN";
+                weightKg = 0.11;
+            } else if (type === 2) {
+                mesh = new THREE.Mesh(new THREE.DodecahedronGeometry(0.055, 0), weedMat);
+                label = "HYACINTH_WEED";
+                weightKg = 0.24;
+            } else {
+                mesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.015, 0.05), wrapperMat);
+                label = "POLY_WRAPPER";
+                weightKg = 0.05;
+            }
+
+            var pos = spawnDebrisPosition();
+            mesh.position.set(pos.x, 0.085, pos.z);
+            scene.add(mesh);
+
+            floatingDebrisList.push({
+                mesh: mesh,
+                label: label,
+                weightKg: weightKg,
+                state: 'floating',
+                beltProgress: 0.0,
+                beltLaneZ: 0.0,
+                capturedWorldX: 0.0,
+                capturedWorldZ: 0.0,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        var wakeGeo = new THREE.SphereGeometry(0.026, 6, 6);
+        var wakeMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0 });
+        for (var w = 0; w < 24; w++) {
+            var p = new THREE.Mesh(wakeGeo, wakeMat.clone());
+            p.position.set(-0.7, 0.082, 0);
+            scene.add(p);
+            wakeParticles.push({ mesh: p, life: w / 24 });
+        }
+
+        for (var r = 0; r < 3; r++) {
+            var ring = new THREE.Mesh(
+                new THREE.RingGeometry(0.05, 0.085, 24),
+                new THREE.MeshBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.0, side: THREE.DoubleSide })
+            );
+            ring.rotation.x = Math.PI / 2;
+            scene.add(ring);
+            sonarPulseRings.push(ring);
+        }
+    }
+
+    function buildUIAndPins() {
+        partsGridEl.innerHTML = '';
+        pinsLayerEl.innerHTML = '';
+
+        PARTS_DATA.forEach(function (part) {
+            var btn = document.createElement('button');
+            btn.className = 'part-btn';
+            btn.id = 'part-btn-' + part.id;
+            btn.innerHTML = '<strong>' + part.id + '.</strong> ' + part.shortName;
+            btn.addEventListener('click', function () { selectPart(part.id, true); });
+            partsGridEl.appendChild(btn);
+
+            var pin = document.createElement('div');
+            pin.className = 'pin-node';
+            pin.id = 'pin-node-' + part.id;
+            pin.innerHTML = '<div class="pin-circle">' + part.id + '</div><div class="pin-label">' + part.shortName + '</div>';
+            pin.addEventListener('click', function () { selectPart(part.id, true); });
+            pinsLayerEl.appendChild(pin);
+        });
+    }
+
+    function selectPart(id, focusCamera) {
+        var part = null;
+        for (var i = 0; i < PARTS_DATA.length; i++) {
+            if (PARTS_DATA[i].id === id) { part = PARTS_DATA[i]; break; }
+        }
+        if (!part) return;
+
+        var btns = document.querySelectorAll('.part-btn');
+        for (var b = 0; b < btns.length; b++) btns[b].classList.remove('active');
+        var pins = document.querySelectorAll('.pin-node');
+        for (var p = 0; p < pins.length; p++) pins[p].classList.remove('active');
+
+        var activeBtn = document.getElementById('part-btn-' + id);
+        var activePin = document.getElementById('pin-node-' + id);
+        if (activeBtn) activeBtn.classList.add('active');
+        if (activePin) activePin.classList.add('active');
+
+        document.getElementById('part-title').textContent = part.fullName;
+        document.getElementById('part-badge').textContent = part.id;
+        document.getElementById('part-spec').textContent = part.spec;
+        document.getElementById('part-what').textContent = part.what;
+        document.getElementById('part-uses').textContent = part.uses;
+        document.getElementById('part-why').textContent = part.why;
+
+        if (focusCamera && controls) {
+            controls.target.set(boatState.x, 0.28, boatState.z);
+        }
+    }
+
+    function updatePinPositions() {
+        if (!labelsVisible) {
+            pinsLayerEl.style.display = 'none';
+            return;
+        }
+        pinsLayerEl.style.display = 'block';
+
+        var width = stageEl.clientWidth;
+        var height = stageEl.clientHeight;
+        if (!width || !height || !robotRoot || !camera) return;
+
+        var tempVec = new THREE.Vector3();
+        PARTS_DATA.forEach(function (part) {
+            var pinEl = document.getElementById('pin-node-' + part.id);
+            if (!pinEl) return;
+
+            var ly = part.localPos.y;
+            if (part.id === 9 && sonarDropGroup) {
+                ly += sonarDropGroup.position.y;
+            }
+
+            tempVec.set(part.localPos.x, ly, part.localPos.z);
+            robotRoot.localToWorld(tempVec);
+            tempVec.project(camera);
+
+            if (tempVec.z > 1.0) {
+                pinEl.style.display = 'none';
+            } else {
+                var sx = (tempVec.x * 0.5 + 0.5) * width;
+                var sy = (-tempVec.y * 0.5 + 0.5) * height;
+                pinEl.style.display = 'flex';
+                pinEl.style.left = sx + 'px';
+                pinEl.style.top = sy + 'px';
+            }
+        });
+    }
+
+    // Modern Pointer Events for D-Pad (Zero Mobile Passive Listener Console Errors!)
+    function setupControllerEvents() {
+        sensRange.addEventListener('input', function (e) {
+            controllerSens = parseFloat(e.target.value);
+            sensDisplay.textContent = controllerSens.toFixed(1) + 'x';
+        });
+
+        function bindPointerKey(btnId, keyName) {
+            var el = document.getElementById(btnId);
+            if (!el) return;
+            var press = function (e) {
+                if (e && e.cancelable) e.preventDefault();
+                if (driveMode !== 'manual') setDriveMode('manual');
+                inputKeys[keyName] = true;
+                el.classList.add('pressed');
+            };
+            var release = function () {
+                inputKeys[keyName] = false;
+                el.classList.remove('pressed');
+            };
+            el.addEventListener('pointerdown', press);
+            el.addEventListener('pointerup', release);
+            el.addEventListener('pointerleave', release);
+            el.addEventListener('pointercancel', release);
+        }
+
+        bindPointerKey('key-up', 'up');
+        bindPointerKey('key-down', 'down');
+        bindPointerKey('key-left', 'left');
+        bindPointerKey('key-right', 'right');
+
+        document.getElementById('key-home').addEventListener('click', function () {
+            boatState.x = 0;
+            boatState.z = 0;
+            boatState.heading = 0.25;
+            boatState.speed = 0;
+            boatState.turnRate = 0;
+            if (robotRoot) {
+                robotRoot.position.set(0, 0, 0);
+                robotRoot.rotation.set(0, 0.25, 0);
+            }
+            if (camera && controls) {
+                camera.position.set(1.85, 1.18, 1.55);
+                controls.target.set(0.1, 0.26, 0);
+            }
+            barrierToast.style.display = 'none';
+        });
+
+        btnModeManual.addEventListener('click', function () { setDriveMode('manual'); });
+        btnModeAuto.addEventListener('click', function () { setDriveMode('auto'); });
+
+        window.addEventListener('keydown', function (e) {
+            var k = e.key.toLowerCase();
+            if (['w', 'arrowup', 's', 'arrowdown', 'a', 'arrowleft', 'd', 'arrowright'].indexOf(k) !== -1) {
+                if (driveMode !== 'manual') setDriveMode('manual');
+            }
+            if (k === 'w' || k === 'arrowup') { inputKeys.up = true; document.getElementById('key-up').classList.add('pressed'); }
+            if (k === 's' || k === 'arrowdown') { inputKeys.down = true; document.getElementById('key-down').classList.add('pressed'); }
+            if (k === 'a' || k === 'arrowleft') { inputKeys.left = true; document.getElementById('key-left').classList.add('pressed'); }
+            if (k === 'd' || k === 'arrowright') { inputKeys.right = true; document.getElementById('key-right').classList.add('pressed'); }
+        });
+
+        window.addEventListener('keyup', function (e) {
+            var k = e.key.toLowerCase();
+            if (k === 'w' || k === 'arrowup') { inputKeys.up = false; document.getElementById('key-up').classList.remove('pressed'); }
+            if (k === 's' || k === 'arrowdown') { inputKeys.down = false; document.getElementById('key-down').classList.remove('pressed'); }
+            if (k === 'a' || k === 'arrowleft') { inputKeys.left = false; document.getElementById('key-left').classList.remove('pressed'); }
+            if (k === 'd' || k === 'arrowright') { inputKeys.right = false; document.getElementById('key-right').classList.remove('pressed'); }
+        });
+    }
+
+    function setDriveMode(mode) {
+        driveMode = mode;
+        btnModeManual.classList.toggle('active', mode === 'manual');
+        btnModeAuto.classList.toggle('active', mode === 'auto');
+        updateHUDStatus();
+    }
+
+    function updateHUDStatus() {
+        if (isSimRunning) {
+            btnToggleSim.textContent = "⏹ STOP";
+            btnToggleSim.classList.add('active-run');
+            statusDot.classList.add('running');
+            sidebarChip.textContent = "SIMULATOR ON";
+            sidebarChip.classList.add('active');
+            document.getElementById('tel-conv').textContent = "ON";
+            document.getElementById('stat-conveyor').textContent = "ON (0.28 m/s)";
+            document.getElementById('ai-fps-status').textContent = "30 FPS • LIVE";
+            document.getElementById('ai-fps-status').style.color = "#10b981";
+            statusLabel.textContent = driveMode === 'auto' ? "AI AUTO + BELT ON" : "MANUAL + BELT ON";
+        } else {
+            btnToggleSim.textContent = "▶ RUN";
+            btnToggleSim.classList.remove('active-run');
+            statusDot.classList.remove('running');
+            sidebarChip.textContent = "STANDBY / IDLE";
+            sidebarChip.classList.remove('active');
+            document.getElementById('tel-conv').textContent = "OFF";
+            document.getElementById('tel-speed').textContent = "0.0 m/s";
+            document.getElementById('stat-conveyor').textContent = "OFF (0.0 m/s)";
+            document.getElementById('ai-fps-status').textContent = "STANDBY (OFF)";
+            document.getElementById('ai-fps-status').style.color = "#f59e0b";
+            statusLabel.textContent = "IDLE (BELT OFF)";
+            barrierToast.style.display = 'none';
+        }
+    }
+
+    btnToggleSim.addEventListener('click', function () {
+        if (!isSimRunning && !hasConfiguredLake) {
+            lakeModal.style.display = 'flex';
+        } else {
+            isSimRunning = !isSimRunning;
+            updateHUDStatus();
+        }
+    });
+
+    btnOpenLake.addEventListener('click', function () {
+        lakeModal.style.display = 'flex';
+    });
+
+    btnModalClose.addEventListener('click', function () {
+        lakeModal.style.display = 'none';
+    });
+
+    btnModalApply.addEventListener('click', function () {
+        var lakeKey = document.getElementById('select-lake').value;
+        var selectedMode = document.getElementById('select-mode').value;
+        var profile = LAKE_PROFILES[lakeKey] || LAKE_PROFILES.bellandur;
+
+        document.getElementById('env-title').textContent = profile.title;
+        document.getElementById('env-desc').textContent = profile.desc;
+        document.getElementById('sonar-depth-txt').textContent = profile.depth;
+
+        if (waterMesh) waterMesh.material.color.setHex(profile.waterColor);
+        if (scene && scene.fog) scene.fog.color.setHex(profile.fogColor);
+
+        hasConfiguredLake = true;
+        setDriveMode(selectedMode);
+        isSimRunning = true;
+        updateHUDStatus();
+        lakeModal.style.display = 'none';
+    });
+
+    // Camera Mode Switching
+    var camPills = document.querySelectorAll('.cam-pill[data-view]');
+    for (var cp = 0; cp < camPills.length; cp++) {
+        camPills[cp].addEventListener('click', function () {
+            var v = this.getAttribute('data-view');
+            if (v === 'labels') {
+                labelsVisible = !labelsVisible;
+                this.textContent = labelsVisible ? "Labels" : "No Labels";
+                return;
+            }
+            for (var i = 0; i < camPills.length; i++) {
+                if (camPills[i].getAttribute('data-view') !== 'labels') camPills[i].classList.remove('active-cam');
+            }
+            this.classList.add('active-cam');
+
+            if (!camera || !controls) return;
+            var rx = boatState.x;
+            var rz = boatState.z;
+            if (v === 'chase') {
+                var bx = rx - Math.cos(boatState.heading) * 2.3;
+                var bz = rz + Math.sin(boatState.heading) * 2.3;
+                camera.position.set(bx, 1.25, bz);
+                controls.target.set(rx, 0.28, rz);
+            } else if (v === 'satellite') {
+                camera.position.set(rx + 0.01, 14.0, rz + 0.01);
+                controls.target.set(rx, 0.0, rz);
+            } else if (v === 'front') {
+                camera.position.set(rx + Math.cos(boatState.heading) * 1.55, 0.62, rz - Math.sin(boatState.heading) * 1.55);
+                controls.target.set(rx + Math.cos(boatState.heading) * 0.25, 0.24, rz - Math.sin(boatState.heading) * 0.25);
+            } else if (v === 'sonar') {
+                camera.position.set(rx + 1.1, 0.02, rz + 1.15);
+                controls.target.set(rx, -0.15, rz);
+            }
+        });
+    }
+
+    function handleStageResize() {
+        var w = stageEl.clientWidth;
+        var h = stageEl.clientHeight;
+        if (w > 10 && h > 10 && camera && renderer) {
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        }
+    }
+    window.addEventListener('resize', handleStageResize);
+    window.addEventListener('orientationchange', function () { setTimeout(handleStageResize, 200); });
+
+    function getNearestFloatingTrash() {
+        var bestItem = null;
+        var bestDist = Infinity;
+        for (var i = 0; i < floatingDebrisList.length; i++) {
+            var item = floatingDebrisList[i];
+            if (item.state !== 'floating') continue;
+            var d = Math.hypot(item.mesh.position.x - boatState.x, item.mesh.position.z - boatState.z);
+            if (d < bestDist) {
+                bestDist = d;
+                bestItem = item;
+            }
+        }
+        return bestItem;
+    }
+
+    // Live Diagnostic Feeds
+    var aiCanvas = document.getElementById('ai-cam-canvas');
+    var aiCtx = aiCanvas.getContext('2d');
+    var sonarCanvas = document.getElementById('sonar-radar-canvas');
+    var sonarCtx = sonarCanvas.getContext('2d');
+    var heatCanvas = document.getElementById('heatmap-canvas');
+    var heatCtx = heatCanvas.getContext('2d');
+
+    function renderLiveDiagnosticFeeds(t) {
+        aiCtx.fillStyle = '#061c24';
+        aiCtx.fillRect(0, 0, 360, 135);
+        aiCtx.fillStyle = '#123315';
+        aiCtx.fillRect(0, 0, 360, 32);
+
+        var fwdX = Math.cos(boatState.heading);
+        var fwdZ = -Math.sin(boatState.heading);
+        var rightX = Math.sin(boatState.heading);
+        var rightZ = Math.cos(boatState.heading);
+
+        var visibleTargets = 0;
+        for (var i = 0; i < floatingDebrisList.length; i++) {
+            var item = floatingDebrisList[i];
+            if (item.state !== 'floating') continue;
+            var itemX = item.mesh ? item.mesh.position.x : item.x;
+            var itemZ = item.mesh ? item.mesh.position.z : item.z;
+            var relX = itemX - boatState.x;
+            var relZ = itemZ - boatState.z;
+
+            var forwardDist = relX * fwdX + relZ * fwdZ;
+            var lateralOffset = relX * rightX + relZ * rightZ;
+
+            if (forwardDist > 0.35 && forwardDist < 3.6 && Math.abs(lateralOffset) < forwardDist * 0.75) {
+                visibleTargets++;
+                var screenX = 180 + (lateralOffset / (forwardDist * 0.75)) * 145;
+                var screenY = 38 + (1.0 - (forwardDist / 3.6)) * 78;
+                var boxScale = Math.max(16, 46 * (1.0 - forwardDist / 4.2));
+
+                aiCtx.strokeStyle = '#10b981';
+                aiCtx.lineWidth = 1.5;
+                aiCtx.strokeRect(screenX - boxScale / 2, screenY - boxScale / 3, boxScale, boxScale * 0.65);
+
+                aiCtx.fillStyle = '#10b981';
+                aiCtx.font = 'bold 9px monospace';
+                var conf = Math.min(0.98, (0.95 - forwardDist * 0.04)).toFixed(2);
+                aiCtx.fillText(item.label + ' ' + conf, screenX - boxScale / 2, screenY - boxScale / 3 - 3);
+            }
+        }
+
+        if (visibleTargets === 0) {
+            aiCtx.fillStyle = 'rgba(148, 163, 184, 0.75)';
+            aiCtx.font = 'bold 10px monospace';
+            aiCtx.fillText('0 TARGETS IN FOV — OPEN WATER AHEAD', 45, 82);
+        }
+
+        sonarCtx.fillStyle = '#040d14';
+        sonarCtx.fillRect(0, 0, 360, 135);
+        var cx = 180, cy = 122;
+        sonarCtx.strokeStyle = 'rgba(6, 182, 212, 0.28)';
+        sonarCtx.lineWidth = 1;
+        [30, 60, 90, 115].forEach(function (r) {
+            sonarCtx.beginPath();
+            sonarCtx.arc(cx, cy, r, Math.PI, 0);
+            sonarCtx.stroke();
+        });
+
+        if (isSimRunning) {
+            var sweepAngle = Math.PI + ((t * 1.4) % Math.PI);
+            sonarCtx.strokeStyle = '#f43f5e';
+            sonarCtx.lineWidth = 2;
+            sonarCtx.beginPath();
+            sonarCtx.moveTo(cx, cy);
+            sonarCtx.lineTo(cx + Math.cos(sweepAngle) * 115, cy + Math.sin(sweepAngle) * 115);
+            sonarCtx.stroke();
+        } else {
+            sonarCtx.fillStyle = 'rgba(245, 158, 11, 0.8)';
+            sonarCtx.font = 'bold 10px monospace';
+            sonarCtx.fillText('SONAR IN STANDBY (SIMULATOR OFF)', 60, 75);
+        }
+
+        var cw = heatCanvas.width / HEAT_COLS;
+        var ch = heatCanvas.height / HEAT_ROWS;
+        for (var r = 0; r < HEAT_ROWS; r++) {
+            for (var c = 0; c < HEAT_COLS; c++) {
+                var val = heatmapGrid[r][c];
+                if (val === 0) heatCtx.fillStyle = '#071921';
+                else if (val === 1) heatCtx.fillStyle = '#0e7490';
+                else if (val === 2) heatCtx.fillStyle = '#eab308';
+                else if (val === 3) heatCtx.fillStyle = '#f97316';
+                else heatCtx.fillStyle = '#e11d48';
+                heatCtx.fillRect(c * cw, r * ch, cw - 1, ch - 1);
+            }
+        }
+
+        var mapX = ((boatState.x / CHANNEL_SAFE_X) * 0.42 + 0.5) * heatCanvas.width;
+        var mapY = ((boatState.z / CHANNEL_SAFE_Z) * 0.42 + 0.5) * heatCanvas.height;
+        heatCtx.fillStyle = '#10b981';
+        heatCtx.beginPath();
+        heatCtx.arc(mapX, mapY, 4.5, 0, Math.PI * 2);
+        heatCtx.fill();
+    }
+
+    var startTime = Date.now();
+    function animateLoop() {
+        requestAnimationFrame(animateLoop);
+        var t = (Date.now() - startTime) * 0.001;
+
+        if (waterNormalTex) {
+            waterNormalTex.offset.x += 0.0005;
+            waterNormalTex.offset.y += 0.0003;
+        }
+
+        for (var d = 0; d < floatingDebrisList.length; d++) {
+            var item = floatingDebrisList[d];
+            if (item.state === 'floating') {
+                item.mesh.position.y = 0.085 + Math.sin(t * 2.0 + item.phase) * 0.005;
+            }
+        }
+
+        // STRICT CHECK: Conveyor, Propellers & Movement ONLY run when isSimRunning === true
+        if (isSimRunning && robotRoot) {
+            if (lidarRotor) lidarRotor.rotation.y += 0.06;
+
+            var prevX = boatState.x;
+            var prevZ = boatState.z;
+
+            var normX = boatState.x / CHANNEL_SAFE_X;
+            var normZ = boatState.z / CHANNEL_SAFE_Z;
+            var radialRatio = Math.hypot(normX, normZ);
+
+            if (driveMode === 'manual') {
+                var maxFwd = 0.018 * controllerSens;
+                var maxRev = -0.013 * controllerSens;
+                var maxTurn = 0.026 * controllerSens;
+
+                var targetSpeed = inputKeys.up ? maxFwd : (inputKeys.down ? maxRev : 0.0);
+                boatState.speed += (targetSpeed - boatState.speed) * 0.14;
+
+                var targetTurn = 0;
+                if (inputKeys.left) targetTurn += maxTurn;
+                if (inputKeys.right) targetTurn -= maxTurn;
+                boatState.turnRate += (targetTurn - boatState.turnRate) * 0.20;
+            } else {
+                var desiredAngle;
+                if (radialRatio > 0.78) {
+                    desiredAngle = Math.atan2(boatState.z, -boatState.x);
+                } else {
+                    var targetTrash = getNearestFloatingTrash();
+                    if (targetTrash) {
+                        desiredAngle = Math.atan2(-(targetTrash.mesh.position.z - boatState.z), targetTrash.mesh.position.x - boatState.x);
+                    } else {
+                        desiredAngle = boatState.heading + 0.01;
+                    }
+                }
+
+                var angleDiff = desiredAngle - boatState.heading;
+                angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff));
+
+                var turnIntensity = Math.min(1.0, Math.abs(angleDiff) / 0.8);
+                var cruiseSpeed = (0.015 * controllerSens) * (1.0 - turnIntensity * 0.65);
+
+                boatState.speed += (cruiseSpeed - boatState.speed) * 0.10;
+                var rawTurn = angleDiff * 0.08 * controllerSens;
+                boatState.turnRate = Math.max(-0.038, Math.min(0.038, rawTurn));
+            }
+
+            boatState.heading += boatState.turnRate;
+
+            var nextX = boatState.x + Math.cos(boatState.heading) * boatState.speed;
+            var nextZ = boatState.z - Math.sin(boatState.heading) * boatState.speed;
+
+            var nextRatio = Math.hypot(nextX / CHANNEL_SAFE_X, nextZ / CHANNEL_SAFE_Z);
+            if (nextRatio > 0.86) {
+                barrierToast.style.display = 'block';
+                if (nextRatio >= 0.96) {
+                    var pullScale = 0.955 / nextRatio;
+                    nextX *= pullScale;
+                    nextZ *= pullScale;
+                    var inwardAngle = Math.atan2(nextZ, -nextX);
+                    var diff = inwardAngle - boatState.heading;
+                    diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+                    boatState.heading += (diff >= 0 ? 1 : -1) * 0.035;
+                }
+            } else {
+                barrierToast.style.display = 'none';
+            }
+
+            boatState.x = nextX;
+            boatState.z = nextZ;
+
+            var actualDx = boatState.x - prevX;
+            var actualDz = boatState.z - prevZ;
+            camera.position.x += actualDx;
+            camera.position.z += actualDz;
+            controls.target.set(boatState.x, 0.28, boatState.z);
+
+            boatState.pitch += (Math.abs(boatState.speed) * 1.4 - boatState.pitch) * 0.1;
+            boatState.roll += (-boatState.turnRate * 1.6 - boatState.roll) * 0.1;
+
+            robotRoot.position.set(boatState.x, Math.sin(t * 2.2) * 0.008, boatState.z);
+            robotRoot.rotation.set(boatState.roll, boatState.heading, boatState.pitch + Math.sin(t * 1.5) * 0.005);
+
+            if (bowWakeMesh) {
+                bowWakeMesh.material.opacity = Math.min(0.45, Math.abs(boatState.speed) * 22);
+            }
+
+            var realSpeed = (Math.hypot(actualDx, actualDz) * 62).toFixed(1);
+            document.getElementById('tel-speed').textContent = realSpeed + ' m/s';
+
+            var baseSpin = 0.24 + Math.abs(boatState.speed) * 18 + Math.abs(boatState.turnRate) * 8;
+            for (var pb = 0; pb < propBlades.length; pb++) {
+                propBlades[pb].rotation.x += baseSpin * (pb === 0 ? 1 : 1.06);
+            }
+            for (var cr = 0; cr < conveyorRollers.length; cr++) {
+                conveyorRollers[cr].rotation.y += 0.08;
+            }
+
+            var beltStep = 0.0042 + Math.abs(boatState.speed) * 0.08;
+            if (beltTexture) {
+                beltTexture.offset.x += beltStep * 3.8;
+            }
+            for (var cc = 0; cc < conveyorCleats.length; cc++) {
+                conveyorCleats[cc].position.x -= beltStep;
+                if (conveyorCleats[cc].position.x < -0.30) {
+                    conveyorCleats[cc].position.x = 0.30;
+                }
+            }
+
+            if (sonarDropGroup) {
+                sonarDropGroup.position.y += (-0.10 - sonarDropGroup.position.y) * 0.05;
+            }
+            for (var sr = 0; sr < sonarPulseRings.length; sr++) {
+                var p = ((t * 0.65) + sr * 0.33) % 1.0;
+                var scale = 1.0 + p * 8.5;
+                sonarPulseRings[sr].scale.set(scale, scale, 1);
+                sonarPulseRings[sr].position.set(boatState.x, -0.20 - (p * 0.42), boatState.z);
+                sonarPulseRings[sr].material.opacity = (1.0 - p) * 0.75;
+            }
+
+            // 3-STAGE WASTE COLLECTION LIFECYCLE
+            var scoopMouthX = boatState.x + Math.cos(boatState.heading) * 0.64;
+            var scoopMouthZ = boatState.z - Math.sin(boatState.heading) * 0.64;
+            var itemsOnBeltCount = 0;
+            var tempWorldVec = new THREE.Vector3();
+
+            for (var fd = 0; fd < floatingDebrisList.length; fd++) {
+                var fItem = floatingDebrisList[fd];
+                if (fItem.state === 'floating') {
+                    var distToMouth = Math.hypot(fItem.mesh.position.x - scoopMouthX, fItem.mesh.position.z - scoopMouthZ);
+                    if (distToMouth < 0.52) {
+                        fItem.mesh.position.x += (scoopMouthX - fItem.mesh.position.x) * 0.16;
+                        fItem.mesh.position.z += (scoopMouthZ - fItem.mesh.position.z) * 0.16;
+                    }
+                    if (distToMouth < 0.24) {
+                        fItem.state = 'conveying';
+                        fItem.beltProgress = 0.0;
+                        fItem.beltLaneZ = (Math.random() - 0.5) * 0.26;
+                        fItem.capturedWorldX = fItem.mesh.position.x;
+                        fItem.capturedWorldZ = fItem.mesh.position.z;
+                    }
+                } else if (fItem.state === 'conveying') {
+                    itemsOnBeltCount++;
+                    fItem.beltProgress += beltStep / 0.60;
+
+                    var localRampX = 0.30 - fItem.beltProgress * 0.60;
+                    tempWorldVec.set(localRampX, 0.04, fItem.beltLaneZ);
+                    convGroup.localToWorld(tempWorldVec);
+                    fItem.mesh.position.copy(tempWorldVec);
+
+                    if (fItem.beltProgress >= 1.0) {
+                        var gx = Math.min(HEAT_COLS - 1, Math.max(0, Math.floor(((fItem.capturedWorldX / CHANNEL_SAFE_X) * 0.45 + 0.5) * HEAT_COLS)));
+                        var gz = Math.min(HEAT_ROWS - 1, Math.max(0, Math.floor(((fItem.capturedWorldZ / CHANNEL_SAFE_Z) * 0.45 + 0.5) * HEAT_ROWS)));
+                        if (heatmapGrid[gz][gx] === 0) activeHotspotCells++;
+                        heatmapGrid[gz][gx] = Math.min(5, heatmapGrid[gz][gx] + 1);
+
+                        collectedCount++;
+                        collectedKg = +(collectedKg + fItem.weightKg).toFixed(2);
+
+                        document.getElementById('tel-bin').textContent = collectedKg.toFixed(2) + ' kg (' + collectedCount + ')';
+                        document.getElementById('heat-count').textContent = collectedCount + ' items (' + collectedKg.toFixed(2) + ' kg)';
+                        document.getElementById('heat-cells').textContent = activeHotspotCells + ' Active Cells';
+
+                        if (collectedCount - 1 < binStoredMeshes.length) {
+                            binStoredMeshes[collectedCount - 1].visible = true;
+                        }
+
+                        var newPos = spawnDebrisPosition();
+                        fItem.state = 'floating';
+                        fItem.beltProgress = 0.0;
+                        fItem.mesh.position.set(newPos.x, 0.085, newPos.z);
+                    }
+                }
+            }
+
+            document.getElementById('stat-on-belt').textContent = itemsOnBeltCount + ' items on ramp';
+
+            for (var wpIdx = 0; wpIdx < wakeParticles.length; wpIdx++) {
+                var wp = wakeParticles[wpIdx];
+                wp.life += 0.028;
+                if (wp.life >= 1.0) {
+                    wp.life = 0;
+                    var side = (wpIdx % 2 === 0 ? 1 : -1) * 0.36;
+                    tempWorldVec.set(-0.66, 0.082, side);
+                    robotRoot.localToWorld(tempWorldVec);
+                    wp.mesh.position.copy(tempWorldVec);
+                }
+                wp.mesh.scale.setScalar(0.8 + wp.life * 1.8);
+                wp.mesh.material.opacity = (1.0 - wp.life) * 0.48;
+            }
+        } else {
+            if (robotRoot) robotRoot.position.y = Math.sin(t * 1.6) * 0.006;
+            if (bowWakeMesh) bowWakeMesh.material.opacity = Math.max(0, bowWakeMesh.material.opacity - 0.04);
+            if (sonarDropGroup) sonarDropGroup.position.y += (0.0 - sonarDropGroup.position.y) * 0.05;
+            for (var sIdx = 0; sIdx < sonarPulseRings.length; sIdx++) {
+                sonarPulseRings[sIdx].material.opacity = Math.max(0, sonarPulseRings[sIdx].material.opacity - 0.05);
+            }
+            for (var wIdx = 0; wIdx < wakeParticles.length; wIdx++) {
+                wakeParticles[wIdx].mesh.material.opacity = Math.max(0, wakeParticles[wIdx].mesh.material.opacity - 0.05);
+            }
+        }
+
+        renderLiveDiagnosticFeeds(t);
+        controls.update();
+        renderer.render(scene, camera);
+        updatePinPositions();
+    }
+
+    // Built-In Offline 2.5D Fallback (if mobile file viewer blocks CDN scripts)
+    function start2DFallbackEngine() {
+        using2DFallback = true;
+        var fbCanvas = document.getElementById('fallback-2d-canvas');
+        fbCanvas.style.display = 'block';
+        var fbCtx = fbCanvas.getContext('2d');
+
+        for (var i = 0; i < 16; i++) {
+            var pos = spawnDebrisPosition();
+            floatingDebrisList.push({
+                x: pos.x,
+                z: pos.z,
+                label: i % 2 === 0 ? "PET_BOTTLE" : "HYACINTH_WEED",
+                weightKg: 0.12,
+                state: 'floating'
+            });
+        }
+
+        function loop2D() {
+            requestAnimationFrame(loop2D);
+            var t = (Date.now() - startTime) * 0.001;
+            var w = stageEl.clientWidth || 360;
+            var h = stageEl.clientHeight || 300;
+            fbCanvas.width = w;
+            fbCanvas.height = h;
+
+            fbCtx.fillStyle = '#061c24';
+            fbCtx.fillRect(0, 0, w, h);
+
+            var cx = w * 0.5, cy = h * 0.52;
+            fbCtx.strokeStyle = '#f97316';
+            fbCtx.lineWidth = 3;
+            fbCtx.beginPath();
+            fbCtx.ellipse(cx, cy, w * 0.42, h * 0.38, 0, 0, Math.PI * 2);
+            fbCtx.stroke();
+
+            // Draw Catamaran in center
+            fbCtx.fillStyle = '#dbe4ee';
+            fbCtx.fillRect(cx - 48, cy - 28, 96, 14);
+            fbCtx.fillRect(cx - 48, cy + 14, 96, 14);
+            fbCtx.fillStyle = '#07142b';
+            fbCtx.fillRect(cx - 32, cy - 22, 58, 44);
+            fbCtx.fillStyle = '#475569';
+            fbCtx.fillRect(cx + 26, cy - 14, 34, 28);
+
+            renderLiveDiagnosticFeeds(t);
+        }
+        loop2D();
+    }
+
+    window.addEventListener('DOMContentLoaded', bootApplication);
+</script>
+</body>
+</html>
