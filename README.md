@@ -33,8 +33,8 @@ The simulation visualizes a solar-powered catamaran hull equipped with computer 
 ---
 
 ## 🛠️ Tech Stack & Assets
-* **Frontend UI/UX:** HTML5, CSS3, Modern JavaScript
-* **3D Rendering & Viewer:** WebGL / Three.js / `<model-viewer>`
+* **Frontend UI/UX:** HTML5
+* **3D Rendering & Viewer:** WebGL / `<model-viewer>`
 * **Hosting & Deployment:** GitHub Pages
 
 ---
