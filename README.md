@@ -4,7 +4,7 @@ An interactive 3D web simulation of an autonomous, solar-powered surface vessel 
 
 [![GitHub Pages Status](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-brightgreen)](https://srinidhibatni.github.io/3DSIMULATION-for-Lake-Cleaning-Bot/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tech Stack](https://img.shields.io/badge/Tech-HTML5%20%7%20%7C%20%7C%203D%20Graphics-orange)]()
+[![Tech Stack](https://img.shields.io/badge/Tech-HTML5%20%7C%203D%20Graphics-orange)]()
 
 ---
 
@@ -33,8 +33,8 @@ The simulation visualizes a solar-powered catamaran hull equipped with computer 
 ---
 
 ## 🛠️ Tech Stack & Assets
-* **Frontend UI/UX:** HTML5
-* **3D Rendering & Viewer:** WebGL / `<model-viewer>`
+* **Frontend UI/UX:** HTML5, 3D Graphics
+* **3D Viewer Component:** WebGL / `<model-viewer>`
 * **Hosting & Deployment:** GitHub Pages
 
 ---
