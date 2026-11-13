@@ -44,7 +44,4 @@ The simulation visualizes a solar-powered catamaran hull equipped with computer 
 ```text
 3DSIMULATION-for-Lake-Cleaning-Bot/
 ├── index.html          # Main entry point and 3D viewer interface
-├── assets/             # 3D model files (.glb / .gltf) and textures
-├── css/                # Styling stylesheets
-├── js/                 # Simulation logic and interactive scripts
 └── README.md           # Project documentation
