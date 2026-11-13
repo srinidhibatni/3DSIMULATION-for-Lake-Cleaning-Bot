@@ -12,6 +12,8 @@ An interactive 3D web simulation of an autonomous, solar-powered surface vessel 
 Experience the interactive 3D simulation live in your browser:  
 👉 **[https://srinidhibatni.github.io/3DSIMULATION-for-Lake-Cleaning-Bot/](https://srinidhibatni.github.io/3DSIMULATION-for-Lake-Cleaning-Bot/)**
 
+DOCK MODE AND AI EXPLAINATION LIVE IN YOUR BROWSER!!!:
+👉
 ---
 
 ## 💡 About the Project
