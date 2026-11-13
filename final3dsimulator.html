@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AI Solar Lake Cleaning Robot — Mobile & Desktop 3D Simulator</title>
+    <title>AI Solar Lake Cleaning Robot — Realistic Open Lake & Shoreline 3D Simulator</title>
 
     <!-- Standard global Three.js r128 & OrbitControls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -56,7 +56,7 @@
 
         /* ================= LEFT / BOTTOM COMMAND SIDEBAR ================= */
         #command-sidebar {
-            width: 420px;
+            width: 430px;
             min-width: 340px;
             height: 100%;
             background: var(--bg-panel);
@@ -81,7 +81,7 @@
         }
 
         .sys-tag {
-            font-size: 0.64rem;
+            font-size: 0.63rem;
             font-weight: 800;
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -105,7 +105,7 @@
         }
 
         .sidebar-top h1 {
-            font-size: 1.08rem;
+            font-size: 1.06rem;
             font-weight: 800;
             line-height: 1.22;
             color: #ffffff;
@@ -128,7 +128,7 @@
             color: var(--text-muted);
             padding: 7px 4px;
             border-radius: 7px;
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
@@ -162,7 +162,7 @@
             border-left: 4px solid var(--accent-emerald);
             border-radius: 9px;
             padding: 9px 11px;
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             line-height: 1.38;
             color: var(--text-muted);
         }
@@ -171,7 +171,7 @@
             color: #ffffff;
             display: block;
             margin-bottom: 2px;
-            font-size: 0.8rem;
+            font-size: 0.79rem;
         }
 
         /* Component Detail Inspector Card */
@@ -195,7 +195,7 @@
         }
 
         .inspector-head h2 {
-            font-size: 0.94rem;
+            font-size: 0.93rem;
             color: #ffffff;
             line-height: 1.2;
         }
@@ -220,7 +220,7 @@
             background: rgba(6, 182, 212, 0.14);
             border: 1px solid rgba(6, 182, 212, 0.4);
             color: var(--accent-cyan);
-            font-size: 0.66rem;
+            font-size: 0.65rem;
             font-weight: 700;
             padding: 2px 7px;
             border-radius: 5px;
@@ -234,7 +234,7 @@
         }
 
         .info-label {
-            font-size: 0.63rem;
+            font-size: 0.62rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -242,13 +242,13 @@
         }
 
         .info-body {
-            font-size: 0.79rem;
+            font-size: 0.78rem;
             line-height: 1.38;
             color: var(--text-main);
         }
 
         .sub-heading {
-            font-size: 0.66rem;
+            font-size: 0.65rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -267,7 +267,7 @@
             color: var(--text-main);
             padding: 7px 8px;
             border-radius: 6px;
-            font-size: 0.72rem;
+            font-size: 0.71rem;
             text-align: left;
             cursor: pointer;
             white-space: nowrap;
@@ -287,16 +287,16 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 10px;
-            padding: 9px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
         }
 
         .feed-title {
             display: flex;
             justify-content: space-between;
-            font-size: 0.66rem;
+            font-size: 0.64rem;
             font-weight: 800;
             text-transform: uppercase;
             color: var(--accent-cyan);
@@ -304,7 +304,7 @@
 
         .feed-canvas {
             width: 100%;
-            height: 135px;
+            height: 105px;
             background: #050811;
             border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -330,11 +330,11 @@
             background: var(--bg-card-alt);
             border: 1px solid var(--border-subtle);
             border-radius: 7px;
-            padding: 8px 10px;
+            padding: 7px 9px;
         }
 
         .stat-box span {
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             color: var(--text-muted);
             font-weight: 700;
@@ -342,7 +342,7 @@
         }
 
         .stat-box b {
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             color: #ffffff;
             margin-top: 2px;
             display: block;
@@ -354,7 +354,7 @@
             height: 100%;
             position: relative;
             overflow: hidden;
-            background: #071a21;
+            background: #1e3a5f;
             touch-action: none;
         }
 
@@ -377,6 +377,7 @@
             z-index: 15;
             pointer-events: none;
             gap: 6px;
+            flex-wrap: wrap;
         }
 
         .hud-left, .hud-right {
@@ -384,6 +385,7 @@
             align-items: center;
             gap: 6px;
             pointer-events: auto;
+            flex-wrap: wrap;
         }
 
         .status-pill {
@@ -391,7 +393,7 @@
             border: 1px solid var(--border-glow);
             padding: 6px 11px;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -416,7 +418,7 @@
             border: 1px solid var(--border-subtle);
             padding: 6px 12px;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             display: flex;
             gap: 11px;
             color: var(--text-muted);
@@ -433,7 +435,7 @@
             padding: 7px 14px;
             border-radius: 30px;
             font-weight: 800;
-            font-size: 0.72rem;
+            font-size: 0.71rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             cursor: pointer;
@@ -452,10 +454,16 @@
             color: var(--text-main);
             padding: 7px 11px;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
+        }
+
+        .btn-glass.led-on {
+            border-color: var(--accent-amber);
+            color: var(--accent-amber);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
         }
 
         #barrier-toast {
@@ -498,7 +506,7 @@
             color: var(--text-main);
             padding: 4px 9px;
             border-radius: 16px;
-            font-size: 0.66rem;
+            font-size: 0.65rem;
             font-weight: 700;
             cursor: pointer;
         }
@@ -647,7 +655,7 @@
             border: 1.5px solid #ffffff;
             color: #ffffff;
             font-weight: 900;
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -658,7 +666,7 @@
             background: rgba(11, 15, 25, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: #ffffff;
-            font-size: 0.63rem;
+            font-size: 0.62rem;
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
@@ -693,7 +701,7 @@
             border: 2px solid var(--accent-purple);
             border-radius: 14px;
             width: 100%;
-            max-width: 420px;
+            max-width: 430px;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -785,7 +793,7 @@
                 padding: 8px 12px 6px;
             }
             .sidebar-top h1 {
-                font-size: 0.95rem;
+                font-size: 0.94rem;
             }
             .telemetry-strip, .pin-label {
                 display: none;
@@ -817,7 +825,7 @@
             }
             .cam-pill {
                 padding: 3px 7px;
-                font-size: 0.6rem;
+                font-size: 0.59rem;
             }
         }
     </style>
@@ -829,7 +837,7 @@
     <aside id="command-sidebar">
         <div class="sidebar-top">
             <div class="badge-row">
-                <span class="sys-tag">USV Digital Twin • Mobile & Desktop</span>
+                <span class="sys-tag">Open Lake & 3D Shoreline Twin</span>
                 <span class="live-chip" id="sidebar-chip">STANDBY / IDLE</span>
             </div>
             <h1>AI Solar Lake Cleaning & Waste Mapping Robot</h1>
@@ -837,23 +845,23 @@
 
         <div class="nav-tabs">
             <button class="tab-btn active" data-tab="tab-anatomy">1. 3D Anatomy</button>
-            <button class="tab-btn" data-tab="tab-feeds">2. AI & Sonar</button>
+            <button class="tab-btn" data-tab="tab-feeds">2. Vision & Sonar</button>
             <button class="tab-btn" data-tab="tab-heatmap">3. GIS Heatmap</button>
         </div>
 
-        <!-- TAB 1: 3D ANATOMY & COMPONENT DETAILS (1-12) -->
+        <!-- TAB 1: 3D ANATOMY & COMPONENT DETAILS (1-12 + Belly Cam) -->
         <div class="tab-pane active" id="tab-anatomy">
             <div class="env-card">
-                <strong id="env-title">📍 Bellandur Lake Channel, Bengaluru (Idle Standby)</strong>
-                <span id="env-desc">Conveyor belt, propellers, and sonar are OFF. Tap "▶ RUN" at top-right to select a lake and start skimming floating waste.</span>
+                <strong id="env-title">📍 Bellandur Lake Open Basin & Natural Shorelines</strong>
+                <span id="env-desc">Expansive open water with 3D sloped sandy/rocky beaches, concrete lakeside bund promenade, and real-life photographic sky & terrain textures.</span>
             </div>
 
             <div class="inspector-card">
                 <div class="inspector-head">
-                    <h2 id="part-title">Dual-Lane Inclined Mesh Conveyor Scoop</h2>
-                    <span class="num-circle" id="part-badge">5</span>
+                    <h2 id="part-title">Belly Camera & Twin LED Floodlights</h2>
+                    <span class="num-circle" id="part-badge">9A</span>
                 </div>
-                <span class="spec-pill" id="part-spec">Spec: 316 Stainless Mesh • 12V High-Torque Geared Motor</span>
+                <span class="spec-pill" id="part-spec">Spec: 1080p Low-Light Dome Cam + 2×1200lm Marine LEDs</span>
 
                 <div class="info-row">
                     <span class="info-label">What Does It Do?</span>
@@ -861,7 +869,7 @@
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Used & Uses (Hardware & Application)</span>
+                    <span class="info-label">Used & Uses (Hardware & Non-Interference Design)</span>
                     <p class="info-body" id="part-uses"></p>
                 </div>
 
@@ -871,26 +879,34 @@
                 </div>
             </div>
 
-            <div class="sub-heading">Tap Any Subsystem (1–12) to Inspect:</div>
+            <div class="sub-heading">Tap Any Subsystem (1–12 + Belly Cam) to Inspect:</div>
             <div class="parts-grid" id="parts-grid"></div>
         </div>
 
-        <!-- TAB 2: LIVE YOLOv8 AI CAMERA & UNDERWATER SONAR RADAR -->
+        <!-- TAB 2: SURFACE AI CAM + UNDERWATER BELLY CAM + SONAR RADAR -->
         <div class="tab-pane" id="tab-feeds">
             <div class="feed-box">
                 <div class="feed-title">
-                    <span>📷 Front AI Vision (Real Camera Frustum)</span>
+                    <span>📷 1. Surface Mast AI Cam (YOLOv8)</span>
                     <span id="ai-fps-status" style="color:#f59e0b;">STANDBY</span>
                 </div>
-                <canvas id="ai-cam-canvas" class="feed-canvas" width="360" height="135"></canvas>
+                <canvas id="ai-cam-canvas" class="feed-canvas" width="360" height="105"></canvas>
             </div>
 
             <div class="feed-box">
                 <div class="feed-title">
-                    <span>📡 Ventral Scanning Imaging Sonar</span>
-                    <span style="color:#f43f5e;">DEPTH: <b id="sonar-depth-txt">2.8 m</b></span>
+                    <span>🔦 2. Belly Underwater Cam + 2×LEDs</span>
+                    <span id="belly-led-status" style="color:#10b981;">LEDS ON • CLEAR OF SONAR</span>
                 </div>
-                <canvas id="sonar-radar-canvas" class="feed-canvas" width="360" height="135"></canvas>
+                <canvas id="belly-cam-canvas" class="feed-canvas" width="360" height="105"></canvas>
+            </div>
+
+            <div class="feed-box">
+                <div class="feed-title">
+                    <span>📡 3. Lower Acoustic Sonar (Bathymetric Depth)</span>
+                    <span style="color:#f43f5e;">DEPTH: <b id="sonar-depth-txt">3.1 m</b></span>
+                </div>
+                <canvas id="sonar-radar-canvas" class="feed-canvas" width="360" height="105"></canvas>
             </div>
 
             <div class="stat-grid">
@@ -899,8 +915,8 @@
                     <b id="stat-conveyor">OFF (0.0 m/s)</b>
                 </div>
                 <div class="stat-box">
-                    <span>Items Riding Belt Now</span>
-                    <b id="stat-on-belt">0 items on ramp</b>
+                    <span>Submerged Items Mapped</span>
+                    <b id="stat-submerged">0 bed detections</b>
                 </div>
             </div>
         </div>
@@ -909,7 +925,7 @@
         <div class="tab-pane" id="tab-heatmap">
             <div class="feed-box">
                 <div class="feed-title">
-                    <span>🗺️ Geo-Tagged 10m×10m Lake Grid Heatmap</span>
+                    <span>🗺️ Open Lake & Shoreline GIS Heatmap</span>
                     <span style="color:#f59e0b;">LIVE GPS LOGGING</span>
                 </div>
                 <canvas id="heatmap-canvas" width="360" height="190"></canvas>
@@ -930,7 +946,6 @@
 
     <!-- ================= RIGHT / TOP 3D INTERACTIVE STAGE ================= -->
     <main id="stage-3d">
-        <!-- Built-in 2.5D Fallback Canvas if opened offline or in a restricted mobile file viewer -->
         <canvas id="fallback-2d-canvas" style="display:none; position:absolute; inset:0; width:100%; height:100%;"></canvas>
 
         <div id="top-hud">
@@ -942,24 +957,27 @@
                 <div class="telemetry-strip">
                     <span>Speed: <b id="tel-speed">0.0 m/s</b></span>
                     <span>Conveyor: <b id="tel-conv">OFF</b></span>
+                    <span>Depth: <b id="tel-depth">3.1 m</b></span>
                     <span>Bin: <b id="tel-bin">0.00 kg (0)</b></span>
                 </div>
             </div>
 
             <div class="hud-right">
-                <button class="btn-glass" id="btn-open-lake">🛰️ Lake</button>
+                <button class="btn-glass led-on" id="btn-toggle-leds" title="Toggle Underwater Belly LED Lamps">💡 Belly LEDs: ON</button>
+                <button class="btn-glass" id="btn-open-lake">🏞️ Lake</button>
                 <button class="btn-primary-run" id="btn-toggle-sim">▶ RUN</button>
             </div>
         </div>
 
-        <div id="barrier-toast">🔄 CONTAINMENT BOOM — AUTO-PIVOT ACTIVE</div>
+        <div id="barrier-toast">🏖️ SHALLOW SHORELINE DETECTED — LIDAR & DEPTH SENSOR STEERING TO DEEP WATER</div>
 
         <!-- Bottom-Left Camera View Selector -->
         <div id="camera-bar">
             <button class="cam-pill active-cam" data-view="chase">Follow</button>
-            <button class="cam-pill" data-view="satellite">🛰️ Top</button>
+            <button class="cam-pill" data-view="belly">🔦 Belly Cam & Sonar</button>
             <button class="cam-pill" data-view="front">Scoop</button>
-            <button class="cam-pill" data-view="sonar">Sonar</button>
+            <button class="cam-pill" data-view="shore">🏖️ Shore View</button>
+            <button class="cam-pill" data-view="satellite">🛰️ Aerial</button>
             <button class="cam-pill" data-view="labels" id="btn-toggle-labels">Labels</button>
         </div>
 
@@ -999,26 +1017,26 @@
         <div id="lake-modal">
             <div class="modal-card">
                 <div>
-                    <span class="sys-tag">Mission Deployment Setup</span>
+                    <span class="sys-tag">Real-Life Photographic Lake Environment</span>
                     <h3>Select Target Lake & Start</h3>
                 </div>
-                <p>Select your lake environment and control mode. Once started, the conveyor belt, rear thrusters, and sonar turn ON, and floating trash physically rides up the belt only when scooped from the water.</p>
+                <p>Select your lake environment and control mode. Each lake loads real-life horizon photography and open shorelines with no artificial leaf circle.</p>
 
                 <div class="modal-field">
                     <label for="select-lake">1. Target Lake Environment</label>
                     <select id="select-lake">
-                        <option value="bellandur">Bellandur Lake, Bengaluru (Dark Channel & Hyacinth Mats)</option>
-                        <option value="varthur">Varthur Lake, Bengaluru (Olive Wetland & Bottle Zones)</option>
-                        <option value="ulsoor">Ulsoor Lake, Bengaluru (Deep Emerald Channel & Litter)</option>
-                        <option value="hebbal">Hebbal Lake, Bengaluru (Slate-Blue Channel & Booms)</option>
+                        <option value="bellandur">Bellandur Lake, Bengaluru (Open Basin, Sandy/Rocky Shores & Bund Promenade)</option>
+                        <option value="ulsoor">Ulsoor Lake, Bengaluru (Emerald Water, Green Island Banks & Boating Jetty)</option>
+                        <option value="hebbal">Hebbal Lake, Bengaluru (Golden Hour Reflections, Sloped Shore & Reeds)</option>
+                        <option value="varthur">Varthur Lake, Bengaluru (Wide Rural Shoreline, Mudbanks & Floating Litter)</option>
                     </select>
                 </div>
 
                 <div class="modal-field">
                     <label for="select-mode">2. Thruster Navigation Mode</label>
                     <select id="select-mode">
-                        <option value="auto">AI Autopilot (Seeks Trash & Pivots off Booms)</option>
-                        <option value="manual">Manual Controller (D-Pad or WASD / Arrows)</option>
+                        <option value="auto">AI Autopilot (Roams Open Lake, Skims Trash & Avoids Shallow Shores)</option>
+                        <option value="manual">Manual Controller (Drive Anywhere via D-Pad or WASD / Arrows)</option>
                     </select>
                 </div>
 
@@ -1032,50 +1050,50 @@
 </div>
 
 <script>
-    // Complete 1-12 Anatomy Dataset
+    // Complete Anatomy Dataset (1-12 + Isolated Belly Cam & Twin LEDs)
     var PARTS_DATA = [
         {
-            id: 1,
+            id: "1",
             shortName: "GPS Antenna",
             fullName: "GPS / GNSS Navigation Antenna",
             spec: "Spec: u-blox M9N GNSS + 9-Axis IMU Compass",
             localPos: { x: 0.36, y: 0.97, z: 0.0 },
             what: "Receives real-time multi-constellation satellite signals and 9-axis IMU heading data for autonomous waypoint navigation and geo-tagging.",
-            uses: "Mounted at the highest point of the mast for unobstructed sky view. Used for lawn-mower patrol routing, channel geofencing, and logging the exact coordinates of every trash detection.",
-            why: "Essential for human-free autonomous lake patrol, automatic return-to-dock on low battery, and generating accurate GIS pollution heatmaps."
+            uses: "Mounted at the highest point of the mast for unobstructed sky view. Used for open-lake patrol routing, shoreline geofencing, and logging the exact coordinates of every surface and underwater trash detection.",
+            why: "Essential for human-free autonomous lake patrol, automatic return-to-jetty on low battery, and generating accurate GIS pollution heatmaps."
         },
         {
-            id: 2,
-            shortName: "AI Camera",
-            fullName: "AI Computer Vision Camera",
+            id: "2",
+            shortName: "Surface AI Cam",
+            fullName: "Forward Surface AI Computer Vision Camera",
             spec: "Spec: 1080p IP67 Polarized Camera • YOLOv8 Edge",
             localPos: { x: 0.42, y: 0.81, z: 0.0 },
-            what: "Captures live 1080p forward video frames and feeds them to the onboard edge AI model (YOLOv8) to detect and classify floating waste in real time.",
-            uses: "Uses a waterproof HD camera with polarizing glare filter mounted on the front mast. Used to identify plastic bottles, polythene bags, wrappers, and water hyacinth clumps.",
+            what: "Captures live 1080p forward video frames above water and feeds them to the onboard YOLOv8 model to detect floating waste in real time.",
+            uses: "Uses a waterproof HD camera with polarizing glare filter mounted on the front mast. Used to identify floating plastic bottles, polythene bags, wrappers, and organic debris.",
             why: "Allows the robot to actively spot, classify, and steer directly toward floating trash clusters rather than sweeping empty water."
         },
         {
-            id: 3,
+            id: "3",
             shortName: "LiDAR Sensor",
             fullName: "360° LiDAR & Ultrasonic Obstacle Sensor",
             spec: "Spec: 360° Rotary Laser Scanner + Waterproof Sonar",
             localPos: { x: 0.36, y: 0.87, z: 0.08 },
-            what: "Continuously scans the surrounding water channel and floating boom barriers to measure obstacle distance and trigger smooth pivot steering.",
-            uses: "Uses a 360-degree scanning LiDAR puck paired with waterproof ultrasonic rangefinders. Used to detect containment booms, encroaching hyacinth mats, bund walls, and boats.",
-            why: "Prevents the robot from getting stuck in dense shore vegetation or colliding with containment barriers during unsupervised missions."
+            what: "Continuously scans the surrounding water and natural shorelines to measure obstacle distance and trigger smooth pivot steering.",
+            uses: "Uses a 360-degree scanning LiDAR puck paired with waterproof ultrasonic rangefinders. Used to detect sloped beaches, rock riprap banks, concrete bund walls, jetties, and boats.",
+            why: "Prevents the robot from running aground onto shallow shores or colliding with lakeside structures during unsupervised missions."
         },
         {
-            id: 4,
+            id: "4",
             shortName: "Solar Panels",
             fullName: "Monocrystalline Solar Panel Array",
             spec: "Spec: 2 × 100W Monocrystalline PV Canopy",
             localPos: { x: -0.05, y: 0.72, z: 0.18 },
-            what: "Converts sunlight directly into DC electrical power to charge the onboard battery bank and run the thrusters, conveyor, and AI computer.",
+            what: "Converts sunlight directly into DC electrical power to charge the onboard battery bank and run the thrusters, conveyor, LEDs, and AI computer.",
             uses: "High-efficiency monocrystalline photovoltaic modules mounted on an anodized aluminum canopy frame. Used to provide continuous clean daytime energy and shade the internal electronics.",
-            why: "Eliminates fossil-fuel emissions, noise pollution, and fuel costs while extending daily mission endurance on large lakes."
+            why: "Eliminates fossil-fuel emissions, noise pollution, and fuel costs while extending daily mission endurance across large lakes."
         },
         {
-            id: 5,
+            id: "5",
             shortName: "Conveyor Scoop",
             fullName: "Dual-Lane Inclined Mesh Conveyor Scoop",
             spec: "Spec: 316 Stainless Open Mesh • 12V Geared Motor",
@@ -1085,7 +1103,7 @@
             why: "Provides on-demand, automated mechanical skimming without clogging or lifting heavy water weight into the boat."
         },
         {
-            id: 6,
+            id: "6",
             shortName: "Guide Barriers",
             fullName: "Front Intake Guide Barriers (Deflector Wings)",
             spec: "Spec: Angled Aluminum Wings + High-Vis Bumpers",
@@ -1095,7 +1113,7 @@
             why: "Increases single-pass collection efficiency and prevents floating debris from being pushed away by the bow wave."
         },
         {
-            id: 7,
+            id: "7",
             shortName: "Collection Bin",
             fullName: "Perforated Stainless Steel Waste Collection Bin",
             spec: "Spec: 45L Perforated Basket + Ultrasonic Level Sensor",
@@ -1105,101 +1123,122 @@
             why: "Keeps the catamaran balanced as waste accumulates, allows residual water to drain out, and enables quick dock emptying."
         },
         {
-            id: 8,
-            shortName: "Propeller Thrusters",
+            id: "8",
+            shortName: "Thrusters",
             fullName: "Twin Shrouded Underwater Propeller Thrusters",
             spec: "Spec: 2 × 12V Brushless Thrusters + Weed Guards",
             localPos: { x: -0.62, y: 0.06, z: 0.36 },
-            what: "Provides forward/reverse propulsion and differential-thrust steering to maneuver and pivot the catamaran on the spot.",
+            what: "Provides forward/reverse propulsion and differential-thrust steering to maneuver and pivot the catamaran across the open lake.",
             uses: "Two 12V brushless underwater thrusters with electronic speed controllers (ESCs) and protective safety shrouds mounted under the rear of both hulls.",
-            why: "Differential thrust enables instant zero-radius turns away from barriers without rudders, while shrouds block weeds from tangling the blades."
+            why: "Differential thrust enables instant zero-radius turns away from shallow shores without rudders, while shrouds block weeds from tangling the blades."
         },
         {
-            id: 9,
-            shortName: "Underwater Sonar",
-            fullName: "Underwater Camera & Scanning Imaging Sonar Pod",
-            spec: "Spec: Side-Scan Sonar + 1080p Low-Light LED Camera",
-            localPos: { x: -0.05, y: -0.14, z: 0.0 },
-            what: "Inspects submerged water conditions, detects sunken debris, measures water depth, and maps the lakebed profile when deployed.",
-            uses: "Waterproof 1080p low-light camera with dual LED lamps, pressure depth sensor, and scanning imaging sonar mounted on a motorized drop-strut beneath the center hull.",
-            why: "Surface cameras cannot see through dark lake water; combining underwater vision and sonar reveals submerged plastic accumulation zones."
+            id: "9A",
+            shortName: "Belly Cam & LEDs",
+            fullName: "Under-Belly 1080p Camera, 2×LED Lamps & Depth Sensor",
+            spec: "Spec: Waterproof 1080p Dome + 2×LEDs (Acoustically Isolated)",
+            localPos: { x: 0.06, y: -0.05, z: 0.0 },
+            what: "Illuminates dark underwater beds below the hull with twin LED floodlights and captures 1080p underwater video + depth readings of submerged plastic and cans.",
+            uses: "Mounted on an isolated upper-forward cross-arm (10 cm ABOVE and ahead of the sonar transducer) angled 25° forward-downward with shielded twisted-pair cabling. Used to visually identify submerged waste without crossing or disturbing the sonar's acoustic beam.",
+            why: "Positioning the camera and LEDs on an upper-forward outrigger ensures zero acoustic shadowing, zero physical obstruction, and zero EMI noise on the lower sonar transducer."
         },
         {
-            id: 10,
+            id: "9B",
+            shortName: "Imaging Sonar",
+            fullName: "Lower Ventral Scanning Imaging Sonar Pod",
+            spec: "Spec: 360° Down/Side-Scan Sonar (Lowest Clear Point)",
+            localPos: { x: -0.06, y: -0.17, z: 0.0 },
+            what: "Emits unobstructed acoustic sonar pulses downward and sideways to measure real water depth, detect shallow shorelines, and locate submerged debris.",
+            uses: "Mounted at the absolute lowest tip of the vibration-damped drop-strut below the belly camera bracket. Used for bathymetric depth logging and submerged hotspot mapping.",
+            why: "Because it sits below the belly camera and LEDs, its 360° acoustic cone has a 100% clear path to the lakebed with zero interference."
+        },
+        {
+            id: "10",
             shortName: "Floating Hulls",
             fullName: "Twin Catamaran Floating Hulls (HDPE / Marine Alu)",
             spec: "Spec: 1.15m × 0.86m Twin Pontoon Catamaran",
             localPos: { x: 0.15, y: 0.14, z: 0.38 },
-            what: "Provides high buoyancy, hydrodynamic stability, and a wide deck platform to support the conveyor, bin, and solar canopy.",
+            what: "Provides high buoyancy, hydrodynamic stability, and a wide deck platform to support the conveyor, bin, belly pod, and solar canopy.",
             uses: "Twin sealed, impact-resistant pontoons with faceted bows and nonslip deck tread plates bridged by an extruded aluminum T-slot frame.",
-            why: "A twin-hull catamaran layout prevents capsizing, offers shallow draft near wetland edges, and leaves an open center channel for the front conveyor scoop."
+            why: "A twin-hull catamaran layout prevents capsizing, offers shallow draft near natural beaches, and leaves an open center channel for the conveyor and belly pod."
         },
         {
-            id: 11,
+            id: "11",
             shortName: "Control & AI Box",
             fullName: "Control & Edge AI Electronics Enclosure",
             spec: "Spec: NVIDIA Jetson Nano + Pixhawk Autopilot (IP67)",
             localPos: { x: -0.36, y: 0.44, z: -0.32 },
-            what: "Processes camera, LiDAR, GPS, and sonar data, runs the YOLO deep-learning waste detector, and commands the thrusters and conveyor motor.",
-            uses: "IP67 waterproof enclosure with external heatsink fins and cable glands housing the Jetson/Raspberry Pi 5, Pixhawk boat controller, ESCs, and 4G/Wi-Fi telemetry.",
-            why: "Centralizes all autonomous decision-making onboard so the robot can detect trash, avoid shoreline barriers, and log heatmaps in real time."
+            what: "Processes surface camera, belly camera, LiDAR, GPS, and sonar data, runs YOLOv8 inference, and commands the thrusters and conveyor motor.",
+            uses: "IP67 waterproof enclosure with external heatsink fins housing the Jetson/Raspberry Pi 5, Pixhawk boat controller, ESCs, and 4G/Wi-Fi telemetry.",
+            why: "Centralizes all autonomous decision-making onboard so the robot can detect trash, avoid shallow shorelines, and log heatmaps in real time."
         },
         {
-            id: 12,
+            id: "12",
             shortName: "Battery & MPPT",
             fullName: "LiFePO4 Battery Pack & MPPT Power System",
             spec: "Spec: 12.8V 30Ah LiFePO4 + 20A MPPT Controller",
             localPos: { x: -0.36, y: 0.44, z: 0.32 },
-            what: "Stores solar energy and delivers regulated 12V/5V DC power to all thrusters, motors, sensors, and onboard computers.",
-            uses: "12.8V 30Ah LiFePO4 battery bank, 20A MPPT solar charge controller, fused distribution bus, and emergency stop circuit inside a sealed waterproof housing.",
-            why: "Ensures 4–6+ hours of continuous operation even during cloudy periods, with MPPT tracking maximizing solar harvest efficiency."
+            what: "Stores solar energy and delivers regulated, filtered 12V/5V DC power to all thrusters, motors, LEDs, sensors, and onboard computers.",
+            uses: "12.8V 30Ah LiFePO4 battery bank, 20A MPPT solar charge controller, EMI-filtered LED driver, and emergency stop circuit inside a sealed waterproof housing.",
+            why: "Ensures 4–6+ hours of continuous operation and isolates LED power lines so they never introduce electrical noise into the sonar receiver."
         }
     ];
 
+    // Real-Life Photographic Panorama & Water Profiles for Each Lake
     var LAKE_PROFILES = {
         bellandur: {
-            title: "📍 Bellandur Lake Channel, Bengaluru",
-            desc: "Dark open-water channel flanked by dense water hyacinth mats, concrete docking jetty, bund roads, and floating containment booms.",
-            waterColor: 0x061c24,
-            fogColor: 0x9cb4c9,
-            depth: "2.8 m"
-        },
-        varthur: {
-            title: "📍 Varthur Lake Channel, Bengaluru",
-            desc: "Olive-green wetland channel bordered by floating macrophyte mats, containment booms, and rural bund embankments.",
-            waterColor: 0x0b261e,
-            fogColor: 0xa5bab0,
-            depth: "2.2 m"
+            title: "📍 Bellandur Lake Open Basin & Shorelines, Bengaluru",
+            desc: "Expansive open lake water with 3D sloped sandy/rocky beaches, concrete lakeside bund promenade, docking jetty, and real-life photographic sky & shoreline textures.",
+            waterColor: 0x0b3142,
+            fogColor: 0xa8c5da,
+            skyPhotoUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+            skyTop: "#1d4ed8",
+            skyHorizon: "#bae6fd"
         },
         ulsoor: {
-            title: "📍 Ulsoor Lake Channel, Bengaluru",
-            desc: "Deep emerald lake channel with island vegetation edges, floating barrier booms, and urban plastic bottle litter.",
-            waterColor: 0x072833,
-            fogColor: 0x95b3c4,
-            depth: "3.4 m"
+            title: "📍 Ulsoor Lake Open Basin & Island Shores, Bengaluru",
+            desc: "Deep emerald open water surrounded by sloped green island banks, stone bund walls, and real-life lakeside photography.",
+            waterColor: 0x08383c,
+            fogColor: 0x9ec5c8,
+            skyPhotoUrl: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1600&q=80",
+            skyTop: "#0369a1",
+            skyHorizon: "#cffafe"
         },
         hebbal: {
-            title: "📍 Hebbal Lake Channel, Bengaluru",
-            desc: "Slate-blue open channel flanked by wetland reed beds, containment booms, and floating plastic accumulation zones.",
-            waterColor: 0x092236,
-            fogColor: 0x9cb0c7,
-            depth: "3.1 m"
+            title: "📍 Hebbal Lake Open Basin & Bund Shore, Bengaluru",
+            desc: "Golden-hour open lake reflections with sculpted sandy beaches, boulder riprap banks, and natural shoreline reed coves.",
+            waterColor: 0x163854,
+            fogColor: 0xc7d2fe,
+            skyPhotoUrl: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80",
+            skyTop: "#1e3a8a",
+            skyHorizon: "#fde68a"
+        },
+        varthur: {
+            title: "📍 Varthur Lake Open Basin & Rural Shores, Bengaluru",
+            desc: "Wide open freshwater basin bordered by natural mudbanks, grassy slopes, and shoreline trees.",
+            waterColor: 0x11362e,
+            fogColor: 0xb5cbbd,
+            skyPhotoUrl: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80",
+            skyTop: "#0284c7",
+            skyHorizon: "#dcfce7"
         }
     };
 
     // Global State — Starts OFF/IDLE so conveyor & propellers do NOT run until started!
     var isSimRunning = false;
     var hasConfiguredLake = false;
+    var bellyLedsOn = true;
     var driveMode = 'auto';
     var controllerSens = 1.2;
     var labelsVisible = true;
     var collectedKg = 0.0;
     var collectedCount = 0;
+    var submergedDetectedCount = 0;
     var activeHotspotCells = 0;
-    var using2DFallback = false;
 
-    var CHANNEL_SAFE_X = 6.2;
-    var CHANNEL_SAFE_Z = 4.6;
+    // Expansive Open Lake Roaming Radius (No tight leaf circle!)
+    var OPEN_LAKE_RADIUS_X = 16.5;
+    var OPEN_LAKE_RADIUS_Z = 14.5;
 
     var boatState = {
         x: 0.0,
@@ -1225,6 +1264,7 @@
     var pinsLayerEl = document.getElementById('pins-layer');
     var partsGridEl = document.getElementById('parts-grid');
     var btnToggleSim = document.getElementById('btn-toggle-sim');
+    var btnToggleLeds = document.getElementById('btn-toggle-leds');
     var btnOpenLake = document.getElementById('btn-open-lake');
     var lakeModal = document.getElementById('lake-modal');
     var btnModalApply = document.getElementById('btn-modal-apply');
@@ -1240,12 +1280,15 @@
 
     // Three.js Globals
     var scene, camera, renderer, controls;
-    var robotRoot, convGroup, lidarRotor, sonarDropGroup, waterMesh, bowWakeMesh;
-    var beltTexture, waterNormalTex;
+    var robotRoot, convGroup, lidarRotor, sonarDropGroup, waterMesh, bowWakeMesh, skyDomeMesh;
+    var beltTexture, waterNormalTex, texLoader;
     var propBlades = [];
     var conveyorRollers = [];
     var conveyorCleats = [];
     var floatingDebrisList = [];
+    var submergedDebrisList = [];
+    var bellyLedCones = [];
+    var bellyLedLenses = [];
     var wakeParticles = [];
     var sonarPulseRings = [];
     var binStoredMeshes = [];
@@ -1263,122 +1306,147 @@
         });
     }
 
-    // Mobile-Optimized Procedural Textures (Fast 512px canvases so mobile never hangs)
-    function createSatelliteLakeTexture() {
+    // =========================================================================
+    // CONTINUOUS 3D LAKEBED & SHORELINE ELEVATION FUNCTION
+    // Defines a wide, natural open lake basin with organic coves, sandy beaches,
+    // and sloped grassy embankments (water surface is at y = 0.08m).
+    // =========================================================================
+    function getTerrainElevation(x, z) {
+        // Normalized elliptical distance from lake center with organic bays/peninsulas
+        var angle = Math.atan2(z, x);
+        var coveVariation = 1.0
+            + 0.14 * Math.sin(angle * 3.0 + 0.5)
+            + 0.09 * Math.cos(angle * 5.0 - 0.8)
+            + 0.05 * Math.sin(angle * 7.0);
+
+        var rx = OPEN_LAKE_RADIUS_X * coveVariation;
+        var rz = OPEN_LAKE_RADIUS_Z * coveVariation;
+        var distRatio = Math.hypot(x / rx, z / rz);
+
+        if (distRatio < 0.78) {
+            // Deep open lake basin (-0.65m deep in center, gently rising toward shore)
+            return -0.65 + (distRatio / 0.78) * 0.22;
+        } else if (distRatio < 1.0) {
+            // Sloping underwater littoral shelf rising up to the shoreline waterline (y = 0.08m)
+            var t = (distRatio - 0.78) / 0.22;
+            return -0.43 + t * 0.51;
+        } else {
+            // Above-water natural shoreline beach, rocky riprap bank & grassy lakeside hills
+            var shoreDist = Math.min(1.6, distRatio - 1.0);
+            var hillUndulation = 0.22 * Math.sin(x * 0.18) * Math.cos(z * 0.18);
+            return 0.08 + shoreDist * 2.1 + hillUndulation;
+        }
+    }
+
+    // Returns real water depth in meters at any (x, z) coordinate
+    function getWaterDepthMeters(x, z) {
+        var bedY = getTerrainElevation(x, z);
+        var rawDepth = (0.08 - bedY) * 4.8; // Scaled to realistic 3.1m central lake depth
+        return Math.max(0.0, rawDepth);
+    }
+
+    // High-Resolution Procedural Shoreline Terrain Texture (Blended with Vertex Colors)
+    function createShoreTerrainTexture() {
         var c = document.createElement('canvas');
         c.width = 512;
         c.height = 512;
         var ctx = c.getContext('2d');
 
-        ctx.fillStyle = '#123315';
+        ctx.fillStyle = '#c2b280';
         ctx.fillRect(0, 0, 512, 512);
 
-        var greens = ['#0c240e', '#163d1a', '#1e4f22', '#28632c', '#112e14', '#314c26', '#43572d'];
-        for (var i = 0; i < 900; i++) {
-            var gx = Math.random() * 512;
-            var gz = Math.random() * 512;
-            var rad = 3 + Math.random() * 14;
-            ctx.fillStyle = greens[i % greens.length];
+        // Fine natural sand, pebbles & grass grain noise
+        var tones = ['#b5a472', '#a39262', '#8c7d53', '#6e7845', '#4b6332', '#d1c49a'];
+        for (var i = 0; i < 3500; i++) {
+            ctx.fillStyle = tones[i % tones.length];
+            ctx.fillRect(Math.random() * 512, Math.random() * 512, 2 + Math.random() * 4, 2 + Math.random() * 4);
+        }
+
+        var tex = new THREE.CanvasTexture(c);
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(24, 24);
+        return tex;
+    }
+
+    // Fallback Procedural Panoramic Sky + Lakeside Horizon (Used immediately & upgraded with real photo URL)
+    function createFallbackSkyTexture(topHex, horizonHex) {
+        var c = document.createElement('canvas');
+        c.width = 1024;
+        c.height = 512;
+        var ctx = c.getContext('2d');
+
+        var skyGrad = ctx.createLinearGradient(0, 0, 0, 320);
+        skyGrad.addColorStop(0, topHex || '#1d4ed8');
+        skyGrad.addColorStop(0.55, '#60a5fa');
+        skyGrad.addColorStop(1, horizonHex || '#bae6fd');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, 1024, 325);
+
+        // Soft realistic clouds
+        for (var i = 0; i < 45; i++) {
+            var cx = (i * 27) % 1024;
+            var cy = 60 + (i % 5) * 32;
+            var rx = 45 + (i % 4) * 24;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.beginPath();
-            ctx.arc(gx, gz, rad, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy, rx, 10, 0, 0, Math.PI * 2);
             ctx.fill();
         }
 
-        // Bund paths on left and right
-        ctx.strokeStyle = '#cbd5e1';
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(44, 0);
-        ctx.bezierCurveTo(70, 160, 60, 340, 104, 512);
-        ctx.stroke();
-
-        ctx.strokeStyle = '#a89078';
-        ctx.lineWidth = 8;
-        ctx.beginPath();
-        ctx.moveTo(472, 0);
-        ctx.bezierCurveTo(460, 200, 480, 350, 468, 512);
-        ctx.stroke();
-
-        var mudGrad = ctx.createRadialGradient(256, 256, 120, 256, 256, 178);
-        mudGrad.addColorStop(0, '#041116');
-        mudGrad.addColorStop(0.75, '#071d24');
-        mudGrad.addColorStop(0.92, '#1a3320');
-        mudGrad.addColorStop(1, 'rgba(18, 51, 21, 0)');
-        ctx.fillStyle = mudGrad;
-        ctx.beginPath();
-        ctx.ellipse(256, 256, 175, 139, 0.15, 0, Math.PI * 2);
-        ctx.fill();
+        // Distant lakeside hills & tree canopy
+        ctx.fillStyle = '#1e3f20';
+        ctx.fillRect(0, 315, 1024, 197);
 
         return new THREE.CanvasTexture(c);
     }
 
-    function createRealisticSkyTexture() {
-        var c = document.createElement('canvas');
-        c.width = 1024;
-        c.height = 256;
-        var ctx = c.getContext('2d');
+    // Load Real-Life Photographic Lake Panorama onto the 360° Sky Dome (with seamless CORS fallback)
+    function applyRealPhotoSkyDome(profile) {
+        if (!skyDomeMesh) return;
+        // Set immediate crisp sky texture first
+        skyDomeMesh.material.map = createFallbackSkyTexture(profile.skyTop, profile.skyHorizon);
+        skyDomeMesh.material.needsUpdate = true;
 
-        var skyGrad = ctx.createLinearGradient(0, 0, 0, 195);
-        skyGrad.addColorStop(0, '#134074');
-        skyGrad.addColorStop(0.4, '#3b7bba');
-        skyGrad.addColorStop(0.78, '#9ec5e6');
-        skyGrad.addColorStop(1, '#e0f2fe');
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, 1024, 198);
+        // Asynchronously load real-life photograph from Unsplash CORS CDN and blend onto the panorama dome
+        var img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+            var c = document.createElement('canvas');
+            c.width = 2048;
+            c.height = 512;
+            var ctx = c.getContext('2d');
+            // Tile the real-life landscape photograph seamlessly around the 360° horizon
+            ctx.drawImage(img, 0, 0, 1024, 512);
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(img, -2048, 0, 1024, 512);
+            ctx.restore();
 
-        // Sun glow
-        var sunGlow = ctx.createRadialGradient(210, 58, 4, 210, 58, 85);
-        sunGlow.addColorStop(0, 'rgba(255, 255, 240, 0.95)');
-        sunGlow.addColorStop(0.25, 'rgba(254, 243, 199, 0.6)');
-        sunGlow.addColorStop(1, 'rgba(254, 243, 199, 0)');
-        ctx.fillStyle = sunGlow;
-        ctx.beginPath();
-        ctx.arc(210, 58, 85, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Clouds
-        for (var i = 0; i < 40; i++) {
-            var cx = (i * 29) % 1024;
-            var cy = 40 + (i % 5) * 19;
-            var rx = 35 + (i % 4) * 18;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-            ctx.beginPath();
-            ctx.ellipse(cx, cy, rx, 7, 0, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        // Distant skyline & treeline
-        for (var b = 0; b < 65; b++) {
-            var bx = b * 16;
-            var bw = 6 + (b % 4) * 3;
-            var bh = 8 + ((b * 13) % 22);
-            ctx.fillStyle = 'rgba(148, 163, 184, 0.5)';
-            ctx.fillRect(bx, 192 - bh, bw, bh);
-        }
-
-        ctx.fillStyle = '#123315';
-        ctx.fillRect(0, 190, 1024, 66);
-
-        return new THREE.CanvasTexture(c);
+            var photoTex = new THREE.CanvasTexture(c);
+            skyDomeMesh.material.map = photoTex;
+            skyDomeMesh.material.needsUpdate = true;
+        };
+        img.src = profile.skyPhotoUrl;
     }
 
     function createWaterRippleTexture() {
         var c = document.createElement('canvas');
-        c.width = 128;
-        c.height = 128;
+        c.width = 256;
+        c.height = 256;
         var ctx = c.getContext('2d');
         ctx.fillStyle = '#808080';
-        ctx.fillRect(0, 0, 128, 128);
-        for (var i = 0; i < 160; i++) {
-            ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.14)';
+        ctx.fillRect(0, 0, 256, 256);
+        for (var i = 0; i < 320; i++) {
+            ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.16)' : 'rgba(0,0,0,0.16)';
             ctx.beginPath();
-            ctx.ellipse(Math.random() * 128, Math.random() * 128, 8, 2, 0.15, 0, Math.PI * 2);
+            ctx.ellipse(Math.random() * 256, Math.random() * 256, 12, 3, 0.15, 0, Math.PI * 2);
             ctx.fill();
         }
         var tex = new THREE.CanvasTexture(c);
         tex.wrapS = THREE.RepeatWrapping;
         tex.wrapT = THREE.RepeatWrapping;
-        tex.repeat.set(18, 18);
+        tex.repeat.set(36, 36);
         return tex;
     }
 
@@ -1425,10 +1493,9 @@
     function bootApplication() {
         buildUIAndPins();
         setupControllerEvents();
-        selectPart(5, false);
+        selectPart("9A", false);
         updateHUDStatus();
 
-        // Check if Three.js loaded and WebGL is supported on this mobile viewer
         if (typeof window.THREE === 'undefined' || typeof window.THREE.OrbitControls === 'undefined') {
             start2DFallbackEngine();
             return;
@@ -1447,11 +1514,11 @@
         var h = stageEl.clientHeight || Math.round(window.innerHeight * 0.54) || 320;
 
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x9cb4c9);
-        scene.fog = new THREE.FogExp2(0x9cb4c9, 0.013);
+        scene.background = new THREE.Color(0xa8c5da);
+        scene.fog = new THREE.FogExp2(0xa8c5da, 0.0085);
 
-        camera = new THREE.PerspectiveCamera(44, w / h, 0.05, 120);
-        camera.position.set(1.85, 1.18, 1.55);
+        camera = new THREE.PerspectiveCamera(44, w / h, 0.05, 160);
+        camera.position.set(1.85, 0.98, 1.65);
 
         renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "default" });
         renderer.setSize(w, h);
@@ -1464,55 +1531,116 @@
         controls.rotateSpeed = 0.75;
         controls.zoomSpeed = 0.9;
         controls.panSpeed = 0.7;
-        controls.minDistance = 0.65;
-        controls.maxDistance = 20.0;
-        controls.maxPolarAngle = Math.PI / 2 + 0.12;
-        controls.target.set(0.1, 0.26, 0.0);
+        controls.minDistance = 0.55;
+        controls.maxDistance = 32.0;
+        controls.maxPolarAngle = Math.PI / 2 + 0.22;
+        controls.target.set(0.05, 0.14, 0.0);
 
-        // Mobile-Safe Multi-Directional Lighting (Zero PMREMGenerator shader crash!)
-        var hemiLight = new THREE.HemisphereLight(0xe0f2fe, 0x123315, 1.15);
+        var hemiLight = new THREE.HemisphereLight(0xe0f2fe, 0x2d4c2b, 1.18);
         scene.add(hemiLight);
 
-        var sunLight = new THREE.DirectionalLight(0xfffbeb, 1.25);
-        sunLight.position.set(8, 15, 7);
+        var sunLight = new THREE.DirectionalLight(0xfffbeb, 1.3);
+        sunLight.position.set(14, 24, 12);
         scene.add(sunLight);
 
-        var fillLight = new THREE.DirectionalLight(0x38bdf8, 0.55);
-        fillLight.position.set(-7, 5, -6);
-        scene.add(fillLight);
+        var underFill = new THREE.DirectionalLight(0x38bdf8, 0.55);
+        underFill.position.set(-8, -4, -6);
+        scene.add(underFill);
 
-        buildSatelliteWetlandEnvironment();
+        texLoader = new THREE.TextureLoader();
+        texLoader.setCrossOrigin('anonymous');
+
+        buildOpenLakeAndRealisticShores();
         buildRobotModel();
         buildEnvironmentDebrisAndEffects();
         animateLoop();
     }
 
-    function buildSatelliteWetlandEnvironment() {
-        var skyGeo = new THREE.CylinderGeometry(45, 45, 30, 36, 1, true);
-        var skyMat = new THREE.MeshBasicMaterial({ map: createRealisticSkyTexture(), side: THREE.BackSide, fog: false });
-        var skyDome = new THREE.Mesh(skyGeo, skyMat);
-        skyDome.position.y = 11;
-        scene.add(skyDome);
+    // =========================================================================
+    // BUILD EXPANSIVE OPEN LAKE & 3D SCULPTED NATURAL SHORELINES (NO LEAF CIRCLE!)
+    // =========================================================================
+    function buildOpenLakeAndRealisticShores() {
+        // 1. 360° Real-Life Photographic Sky & Lake Horizon Dome
+        var skyGeo = new THREE.SphereGeometry(72, 40, 24);
+        var skyMat = new THREE.MeshBasicMaterial({ side: THREE.BackSide, fog: false });
+        skyDomeMesh = new THREE.Mesh(skyGeo, skyMat);
+        skyDomeMesh.position.y = -2;
+        scene.add(skyDomeMesh);
+        applyRealPhotoSkyDome(LAKE_PROFILES.bellandur);
 
-        var satPlane = new THREE.Mesh(
-            new THREE.PlaneGeometry(44, 44, 1, 1),
-            new THREE.MeshStandardMaterial({ map: createSatelliteLakeTexture(), roughness: 0.85, metalness: 0.05 })
-        );
-        satPlane.rotation.x = -Math.PI / 2;
-        satPlane.position.y = 0.06;
-        scene.add(satPlane);
+        // 2. Sculpted 3D Lakebed, Wet Sandy Beach, Rocky Riprap & Grassy Shoreline Hills (96m x 96m)
+        var terrainGeo = new THREE.PlaneGeometry(96, 96, 110, 110);
+        terrainGeo.rotateX(-Math.PI / 2);
 
+        var posAttr = terrainGeo.attributes.position;
+        var colors = [];
+        var colorTmp = new THREE.Color();
+
+        for (var i = 0; i < posAttr.count; i++) {
+            var vx = posAttr.getX(i);
+            var vz = posAttr.getZ(i);
+            var vy = getTerrainElevation(vx, vz);
+            posAttr.setY(i, vy);
+
+            // Realistic Vertex Coloring by Elevation Zone:
+            if (vy < -0.15) {
+                // Deep lakebed silt
+                colorTmp.setHex(0x0c2229);
+            } else if (vy < 0.08) {
+                // Shallow underwater sandbar
+                colorTmp.setHex(0x4b5548);
+            } else if (vy < 0.26) {
+                // Wet sandy beach & shoreline pebbles
+                colorTmp.setHex(0xc2b280);
+            } else if (vy < 0.65) {
+                // Dry sand & shoreline soil bank
+                colorTmp.setHex(0x8c7f56);
+            } else {
+                // Lush green lakeside grass & embankment hills
+                colorTmp.setHex(0x2d5a27);
+            }
+            colors.push(colorTmp.r, colorTmp.g, colorTmp.b);
+        }
+
+        terrainGeo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        terrainGeo.computeVertexNormals();
+
+        var terrainMat = new THREE.MeshStandardMaterial({
+            map: createShoreTerrainTexture(),
+            vertexColors: true,
+            roughness: 0.88,
+            metalness: 0.04
+        });
+        var terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
+        scene.add(terrainMesh);
+
+        // 3. Expansive Open Lake Water Surface (Stretches seamlessly under the 3D sloped beaches)
         waterNormalTex = createWaterRippleTexture();
+        // Load real-life water normal texture from Three.js official CDN if online
+        texLoader.load(
+            'https://threejs.org/examples/textures/waternormals.jpg',
+            function (loadedNormal) {
+                loadedNormal.wrapS = THREE.RepeatWrapping;
+                loadedNormal.wrapT = THREE.RepeatWrapping;
+                loadedNormal.repeat.set(32, 32);
+                waterNormalTex = loadedNormal;
+                if (waterMesh) {
+                    waterMesh.material.bumpMap = loadedNormal;
+                    waterMesh.material.needsUpdate = true;
+                }
+            }
+        );
+
         waterMesh = new THREE.Mesh(
-            new THREE.CircleGeometry(11.2, 48),
+            new THREE.PlaneGeometry(76, 76),
             new THREE.MeshStandardMaterial({
-                color: 0x061c24,
+                color: 0x0b3142,
                 bumpMap: waterNormalTex,
-                bumpScale: 0.012,
-                roughness: 0.16,
-                metalness: 0.45,
+                bumpScale: 0.015,
+                roughness: 0.14,
+                metalness: 0.52,
                 transparent: true,
-                opacity: 0.90,
+                opacity: 0.82,
                 side: THREE.DoubleSide
             })
         );
@@ -1520,72 +1648,95 @@
         waterMesh.position.y = 0.08;
         scene.add(waterMesh);
 
-        var bedMesh = new THREE.Mesh(
-            new THREE.CircleGeometry(11.5, 24),
-            new THREE.MeshStandardMaterial({ color: 0x030b0e, roughness: 0.95 })
-        );
-        bedMesh.rotation.x = -Math.PI / 2;
-        bedMesh.position.y = -0.65;
-        scene.add(bedMesh);
+        // 4. Realistic Lakeside Bund Promenade, Wooden/Concrete Docking Pier & Natural Shoreline Rocks/Trees
+        var rockMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.85 });
+        var trunkMat = new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.9 });
+        var canopyMat1 = new THREE.MeshStandardMaterial({ color: 0x1e4620, roughness: 0.8 });
+        var canopyMat2 = new THREE.MeshStandardMaterial({ color: 0x2d5a27, roughness: 0.8 });
 
-        // Western Bund Docking Jetty
-        var jettyGroup = new THREE.Group();
-        jettyGroup.position.set(-(CHANNEL_SAFE_X + 0.9), 0.18, 0);
-        var jettyDeck = new THREE.Mesh(
-            new THREE.BoxGeometry(1.5, 0.12, 1.2),
-            new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.7 })
-        );
-        jettyGroup.add(jettyDeck);
-        scene.add(jettyGroup);
+        // Place natural shoreline boulders, reed clusters, and multi-layered trees ONLY up on the actual land banks!
+        for (var s = 0; s < 64; s++) {
+            var ang = (s / 64) * Math.PI * 2;
+            // Find exact shoreline position along this ray
+            var coveVar = 1.0 + 0.14 * Math.sin(ang * 3.0 + 0.5) + 0.09 * Math.cos(ang * 5.0 - 0.8) + 0.05 * Math.sin(ang * 7.0);
+            var shoreRx = OPEN_LAKE_RADIUS_X * coveVar;
+            var shoreRz = OPEN_LAKE_RADIUS_Z * coveVar;
 
-        // Floating Containment Booms & Hyacinth Mats
-        var matHyacinthDark = new THREE.MeshStandardMaterial({ color: 0x163d1a, roughness: 0.88 });
-        var matHyacinthMid = new THREE.MeshStandardMaterial({ color: 0x225c27, roughness: 0.84 });
-        var boomSegments = 36;
-
-        for (var i = 0; i < boomSegments; i++) {
-            var ang = (i / boomSegments) * Math.PI * 2;
-            var nextAng = ((i + 1) / boomSegments) * Math.PI * 2;
-            var midAng = (ang + nextAng) / 2;
-
-            var bx = Math.cos(midAng) * (CHANNEL_SAFE_X + 0.65);
-            var bz = Math.sin(midAng) * (CHANNEL_SAFE_Z + 0.65);
-
-            var boom = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.05, 0.05, 0.85, 10),
-                new THREE.MeshStandardMaterial({ color: i % 2 === 0 ? 0xf97316 : 0xfacc15, roughness: 0.3 })
-            );
-            boom.position.set(bx, 0.09, bz);
-            boom.rotation.z = Math.PI / 2;
-            boom.rotation.y = -midAng;
-            scene.add(boom);
-
-            for (var m = 0; m < 2; m++) {
-                var distMult = 1.16 + m * 0.2;
-                var hx = Math.cos(midAng) * (CHANNEL_SAFE_X * distMult);
-                var hz = Math.sin(midAng) * (CHANNEL_SAFE_Z * distMult);
-                var pad = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.7, 0.75, 0.06, 8),
-                    (i + m) % 2 === 0 ? matHyacinthDark : matHyacinthMid
+            // Natural shoreline riprap rocks right at the beach edge (distRatio ~ 1.02)
+            if (s % 2 === 0) {
+                var rxPos = Math.cos(ang) * shoreRx * (1.01 + (s % 3) * 0.02);
+                var rzPos = Math.sin(ang) * shoreRz * (1.01 + (s % 3) * 0.02);
+                var ryPos = getTerrainElevation(rxPos, rzPos);
+                var boulder = new THREE.Mesh(
+                    new THREE.DodecahedronGeometry(0.28 + (s % 4) * 0.12, 1),
+                    rockMat
                 );
-                pad.position.set(hx, 0.09, hz);
-                scene.add(pad);
+                boulder.scale.set(1.3, 0.65, 1.1);
+                boulder.position.set(rxPos, ryPos, rzPos);
+                boulder.rotation.y = s;
+                scene.add(boulder);
             }
+
+            // Realistic multi-clustered shoreline trees up on the grassy embankment (distRatio ~ 1.18 to 1.45)
+            var treeScaleDist = 1.18 + (s % 4) * 0.09;
+            var tx = Math.cos(ang) * shoreRx * treeScaleDist;
+            var tz = Math.sin(ang) * shoreRz * treeScaleDist;
+            var ty = getTerrainElevation(tx, tz);
+
+            var treeGroup = new THREE.Group();
+            treeGroup.position.set(tx, ty, tz);
+
+            var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.16, 1.1, 7), trunkMat);
+            trunk.position.y = 0.5;
+            treeGroup.add(trunk);
+
+            // Multi-puff organic tree canopy
+            var cMat = (s % 2 === 0) ? canopyMat1 : canopyMat2;
+            var puffOffsets = [[0, 1.35, 0, 0.85], [0.4, 1.15, 0.3, 0.65], [-0.4, 1.2, -0.25, 0.7], [0.1, 1.65, -0.2, 0.6]];
+            for (var p = 0; p < puffOffsets.length; p++) {
+                var puff = new THREE.Mesh(new THREE.DodecahedronGeometry(puffOffsets[p][3], 1), cMat);
+                puff.position.set(puffOffsets[p][0], puffOffsets[p][1], puffOffsets[p][2]);
+                treeGroup.add(puff);
+            }
+            scene.add(treeGroup);
         }
+
+        // Concrete & Timber Docking Pier extending from the Western Shoreline into deep water
+        var pierGroup = new THREE.Group();
+        pierGroup.position.set(-OPEN_LAKE_RADIUS_X + 1.2, 0.22, 0);
+        var pierDeck = new THREE.Mesh(
+            new THREE.BoxGeometry(4.2, 0.12, 1.5),
+            new THREE.MeshStandardMaterial({ color: 0x78716c, roughness: 0.75 })
+        );
+        pierGroup.add(pierDeck);
+
+        // Pier support pilings in the water
+        [-1.6, 0, 1.6].forEach(function (px) {
+            [-0.6, 0.6].forEach(function (pz) {
+                var piling = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.06, 0.06, 0.9, 10),
+                    new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.6 })
+                );
+                piling.position.set(px, -0.35, pz);
+                pierGroup.add(piling);
+            });
+        });
+        scene.add(pierGroup);
     }
 
     function buildRobotModel() {
         robotRoot = new THREE.Group();
         scene.add(robotRoot);
 
-        var matHullAlu = new THREE.MeshStandardMaterial({ color: 0xdbe4ee, metalness: 0.55, roughness: 0.3 });
-        var matHullTrim = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.3, roughness: 0.4 });
+        var matHullAlu = new THREE.MeshStandardMaterial({ color: 0xdbe4ee, metalness: 0.55, roughness: 0.28 });
+        var matHullTrim = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.35, roughness: 0.38 });
         var matRedAccent = new THREE.MeshStandardMaterial({ color: 0xe11d48, metalness: 0.4, roughness: 0.3 });
-        var matAluFrame = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.7, roughness: 0.25 });
-        var matDarkSteel = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.6, roughness: 0.35 });
-        var matYellowSafety = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.3 });
-        var matEnclosure = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.4, roughness: 0.3 });
-        var matWhiteSensor = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+        var matAluFrame = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, metalness: 0.75, roughness: 0.22 });
+        var matDarkSteel = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.65, roughness: 0.32 });
+        var matYellowSafety = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.28 });
+        var matEnclosure = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.45, roughness: 0.28 });
+        var matWhiteSensor = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.18 });
+        var matCyanSensor = new THREE.MeshStandardMaterial({ color: 0x06b6d4, metalness: 0.5, roughness: 0.2 });
 
         beltTexture = createMeshBeltTexture();
         var matConveyorBelt = new THREE.MeshStandardMaterial({ map: beltTexture, metalness: 0.5, roughness: 0.4 });
@@ -1597,18 +1748,22 @@
             var hullGroup = new THREE.Group();
             hullGroup.position.set(0, 0.13, zOff);
 
-            var mainBody = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.14, 0.18), matHullAlu);
+            var mainBody = new THREE.Mesh(new THREE.BoxGeometry(1.14, 0.14, 0.18), matHullAlu);
             hullGroup.add(mainBody);
 
-            var lowerStripe = new THREE.Mesh(new THREE.BoxGeometry(1.13, 0.045, 0.185), matHullTrim);
+            var lowerStripe = new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.045, 0.185), matHullTrim);
             lowerStripe.position.y = -0.045;
             hullGroup.add(lowerStripe);
 
             var bowCone = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.28, 4), matHullAlu);
             bowCone.rotation.z = -Math.PI / 2;
             bowCone.rotation.x = Math.PI / 4;
-            bowCone.position.set(0.70, 0.0, 0.0);
+            bowCone.position.set(0.71, 0.0, 0.0);
             hullGroup.add(bowCone);
+
+            var bowBumper = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.06, 0.08), matDarkSteel);
+            bowBumper.position.set(0.83, 0.0, 0.0);
+            hullGroup.add(bowBumper);
 
             robotRoot.add(hullGroup);
         });
@@ -1644,7 +1799,7 @@
             robotRoot.add(pillar);
         });
 
-        // 5. Dual-Lane Inclined Mesh Conveyor Scoop (Starts 100% CLEAN — No pre-attached bottles!)
+        // 5. Dual-Lane Inclined Mesh Conveyor Scoop (Starts 100% CLEAN)
         convGroup = new THREE.Group();
         convGroup.position.set(0.36, 0.22, 0.0);
         convGroup.rotation.z = -24 * (Math.PI / 180);
@@ -1695,7 +1850,7 @@
             robotRoot.add(barrierGroup);
         });
 
-        // 7. Perforated Mesh Waste Collection Bin (Starts Empty)
+        // 7. Perforated Mesh Waste Collection Bin
         var binGroup = new THREE.Group();
         binGroup.position.set(-0.08, 0.36, 0.0);
         robotRoot.add(binGroup);
@@ -1711,6 +1866,10 @@
             new THREE.MeshStandardMaterial({ color: 0x475569, transparent: true, opacity: 0.38, side: THREE.DoubleSide })
         );
         binGroup.add(binInner);
+
+        var binSensorBar = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.02, 0.45), matCyanSensor);
+        binSensorBar.position.set(0, 0.12, 0);
+        binGroup.add(binSensorBar);
 
         var binColors = [0x38bdf8, 0x22c55e, 0xf43f5e, 0xfacc15, 0xffffff, 0x16a34a];
         for (var b = 0; b < 24; b++) {
@@ -1752,7 +1911,7 @@
             });
         });
 
-        // Front Sensor Mast (1: GPS, 2: AI Camera, 3: LiDAR)
+        // Front Sensor Mast (1: GPS, 2: Surface AI Camera, 3: LiDAR)
         var mastPost = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.26, 0.035), matAluFrame);
         mastPost.position.set(0.36, 0.82, 0.0);
         robotRoot.add(mastPost);
@@ -1827,34 +1986,100 @@
             robotRoot.add(thrusterGroup);
         });
 
-        // 9. Underwater Camera & Imaging Sonar Pod
+        // 9A & 9B. TWO-TIER UNDER-BELLY CAMERA + DUAL LED LAMPS + IMAGING SONAR POD
         sonarDropGroup = new THREE.Group();
-        sonarDropGroup.position.set(-0.05, 0.0, 0.0);
+        sonarDropGroup.position.set(-0.02, 0.0, 0.0);
         robotRoot.add(sonarDropGroup);
 
-        var sonarStrut = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.30, 10), matAluFrame);
-        sonarStrut.position.y = 0.06;
+        var sonarStrut = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.34, 12), matAluFrame);
+        sonarStrut.position.set(-0.04, 0.04, 0.0);
         sonarDropGroup.add(sonarStrut);
 
-        var sonarPodBody = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.18, 12), matDarkSteel);
+        var isoCollar = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.03, 12), matRedAccent);
+        isoCollar.position.set(-0.04, -0.08, 0.0);
+        sonarDropGroup.add(isoCollar);
+
+        // Tier 1: Isolated Upper-Forward Optical Outrigger (Belly Camera + 2×LEDs + Depth Sensor)
+        var opticalArm = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.022, 0.03), matAluFrame);
+        opticalArm.position.set(0.03, -0.03, 0.0);
+        sonarDropGroup.add(opticalArm);
+
+        var bellyRig = new THREE.Group();
+        bellyRig.position.set(0.09, -0.04, 0.0);
+        bellyRig.rotation.z = -25 * (Math.PI / 180);
+        sonarDropGroup.add(bellyRig);
+
+        var ledCrossbar = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.022, 0.24), matDarkSteel);
+        bellyRig.add(ledCrossbar);
+
+        var bellyCamBody = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.052, 0.065), matCyanSensor);
+        bellyCamBody.position.set(0.02, 0.0, 0.0);
+        bellyRig.add(bellyCamBody);
+
+        var bellyCamDome = new THREE.Mesh(
+            new THREE.SphereGeometry(0.026, 14, 14),
+            new THREE.MeshStandardMaterial({ color: 0xe0f2fe, metalness: 0.2, roughness: 0.1 })
+        );
+        bellyCamDome.position.set(0.055, 0.0, 0.0);
+        bellyRig.add(bellyCamDome);
+
+        var depthSensorTube = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.065, 10), matAluFrame);
+        depthSensorTube.rotation.z = Math.PI / 2;
+        depthSensorTube.position.set(0.02, 0.035, 0.0);
+        bellyRig.add(depthSensorTube);
+
+        [-1, 1].forEach(function (side) {
+            var zLamp = side * 0.105;
+            var lampHousing = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.018, 0.045, 12), matDarkSteel);
+            lampHousing.rotation.z = Math.PI / 2;
+            lampHousing.position.set(0.02, 0.0, zLamp);
+            bellyRig.add(lampHousing);
+
+            var lampLens = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.019, 0.019, 0.008, 12),
+                new THREE.MeshStandardMaterial({ color: 0xfef08a, emissive: 0xfef08a, emissiveIntensity: 0.95 })
+            );
+            lampLens.rotation.z = Math.PI / 2;
+            lampLens.position.set(0.044, 0.0, zLamp);
+            bellyRig.add(lampLens);
+            bellyLedLenses.push(lampLens);
+
+            var coneGeo = new THREE.ConeGeometry(0.24, 0.72, 16, 1, true);
+            var coneMat = new THREE.MeshBasicMaterial({
+                color: 0xfef08a,
+                transparent: true,
+                opacity: 0.20,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+            var lightCone = new THREE.Mesh(coneGeo, coneMat);
+            lightCone.rotation.z = Math.PI / 2;
+            lightCone.position.set(0.40, 0.0, zLamp);
+            bellyRig.add(lightCone);
+            bellyLedCones.push(lightCone);
+        });
+
+        // Tier 2: Lower Acoustic Sonar Pod (Lowest Point, 100% Unobstructed)
+        var sonarPodBody = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.042, 0.16, 14), matDarkSteel);
         sonarPodBody.rotation.z = Math.PI / 2;
-        sonarPodBody.position.y = -0.09;
+        sonarPodBody.position.set(-0.04, -0.13, 0.0);
         sonarDropGroup.add(sonarPodBody);
 
         var sonarTransducer = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.038, 0.038, 0.03, 12),
-            new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xf43f5e, emissiveIntensity: 0.5 })
+            new THREE.CylinderGeometry(0.038, 0.038, 0.035, 16),
+            new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xf43f5e, emissiveIntensity: 0.55 })
         );
-        sonarTransducer.position.y = -0.12;
+        sonarTransducer.position.set(-0.04, -0.16, 0.0);
         sonarDropGroup.add(sonarTransducer);
     }
 
+    // Spawn Debris Across the Open Lake Basin (Always inside deep water away from dry beaches)
     function spawnDebrisPosition() {
         var ang = Math.random() * Math.PI * 2;
-        var r = 0.25 + Math.random() * 0.58;
+        var r = 0.15 + Math.random() * 0.52;
         return {
-            x: Math.cos(ang) * (CHANNEL_SAFE_X * r),
-            z: Math.sin(ang) * (CHANNEL_SAFE_Z * r)
+            x: Math.cos(ang) * (OPEN_LAKE_RADIUS_X * r),
+            z: Math.sin(ang) * (OPEN_LAKE_RADIUS_Z * r)
         };
     }
 
@@ -1864,7 +2089,7 @@
         var weedMat = new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.85 });
         var wrapperMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.35 });
 
-        for (var i = 0; i < 32; i++) {
+        for (var i = 0; i < 42; i++) {
             var type = i % 4;
             var mesh, label, weightKg;
             if (type === 0) {
@@ -1879,7 +2104,7 @@
                 weightKg = 0.11;
             } else if (type === 2) {
                 mesh = new THREE.Mesh(new THREE.DodecahedronGeometry(0.055, 0), weedMat);
-                label = "HYACINTH_WEED";
+                label = "FLOATING_WEED";
                 weightKg = 0.24;
             } else {
                 mesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.015, 0.05), wrapperMat);
@@ -1901,6 +2126,39 @@
                 capturedWorldX: 0.0,
                 capturedWorldZ: 0.0,
                 phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        // Submerged Lakebed Debris resting at the actual sculpted lakebed depth
+        var sunkenCanMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.4 });
+        var sunkenBottleMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.3 });
+        var sunkenTireMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.7 });
+
+        for (var s = 0; s < 22; s++) {
+            var sPos = spawnDebrisPosition();
+            var bedY = getTerrainElevation(sPos.x, sPos.z);
+            var sType = s % 3;
+            var sMesh, sLabel;
+            if (sType === 0) {
+                sMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.10, 8), sunkenCanMat);
+                sMesh.rotation.z = Math.PI / 2;
+                sLabel = "SUNKEN_CAN";
+            } else if (sType === 1) {
+                sMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.09, 8), sunkenBottleMat);
+                sMesh.rotation.z = Math.PI / 2;
+                sLabel = "SUNKEN_PLASTIC";
+            } else {
+                sMesh = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.022, 8, 14), sunkenTireMat);
+                sMesh.rotation.x = Math.PI / 2;
+                sLabel = "BED_DEBRIS";
+            }
+            sMesh.position.set(sPos.x, bedY + 0.03, sPos.z);
+            scene.add(sMesh);
+            submergedDebrisList.push({
+                mesh: sMesh,
+                label: sLabel,
+                depthM: getWaterDepthMeters(sPos.x, sPos.z).toFixed(1),
+                mapped: false
             });
         }
 
@@ -1948,7 +2206,7 @@
     function selectPart(id, focusCamera) {
         var part = null;
         for (var i = 0; i < PARTS_DATA.length; i++) {
-            if (PARTS_DATA[i].id === id) { part = PARTS_DATA[i]; break; }
+            if (PARTS_DATA[i].id === String(id)) { part = PARTS_DATA[i]; break; }
         }
         if (!part) return;
 
@@ -1957,8 +2215,8 @@
         var pins = document.querySelectorAll('.pin-node');
         for (var p = 0; p < pins.length; p++) pins[p].classList.remove('active');
 
-        var activeBtn = document.getElementById('part-btn-' + id);
-        var activePin = document.getElementById('pin-node-' + id);
+        var activeBtn = document.getElementById('part-btn-' + part.id);
+        var activePin = document.getElementById('pin-node-' + part.id);
         if (activeBtn) activeBtn.classList.add('active');
         if (activePin) activePin.classList.add('active');
 
@@ -1969,8 +2227,13 @@
         document.getElementById('part-uses').textContent = part.uses;
         document.getElementById('part-why').textContent = part.why;
 
-        if (focusCamera && controls) {
-            controls.target.set(boatState.x, 0.28, boatState.z);
+        if (focusCamera && controls && camera) {
+            if (part.id === "9A" || part.id === "9B") {
+                camera.position.set(boatState.x + 0.95, -0.02, boatState.z + 0.95);
+                controls.target.set(boatState.x, -0.10, boatState.z);
+            } else {
+                controls.target.set(boatState.x, 0.28, boatState.z);
+            }
         }
     }
 
@@ -1991,7 +2254,7 @@
             if (!pinEl) return;
 
             var ly = part.localPos.y;
-            if (part.id === 9 && sonarDropGroup) {
+            if ((part.id === "9A" || part.id === "9B") && sonarDropGroup) {
                 ly += sonarDropGroup.position.y;
             }
 
@@ -2011,7 +2274,23 @@
         });
     }
 
-    // Modern Pointer Events for D-Pad (Zero Mobile Passive Listener Console Errors!)
+    // Belly LED Floodlights Toggle
+    btnToggleLeds.addEventListener('click', function () {
+        bellyLedsOn = !bellyLedsOn;
+        btnToggleLeds.textContent = bellyLedsOn ? "💡 Belly LEDs: ON" : "💡 Belly LEDs: OFF";
+        btnToggleLeds.classList.toggle('led-on', bellyLedsOn);
+        document.getElementById('belly-led-status').textContent = bellyLedsOn
+            ? "LEDS ON • CLEAR OF SONAR"
+            : "LEDS OFF • LOW-LIGHT MODE";
+
+        for (var i = 0; i < bellyLedCones.length; i++) {
+            bellyLedCones[i].visible = bellyLedsOn;
+        }
+        for (var j = 0; j < bellyLedLenses.length; j++) {
+            bellyLedLenses[j].material.emissiveIntensity = bellyLedsOn ? 0.95 : 0.1;
+        }
+    });
+
     function setupControllerEvents() {
         sensRange.addEventListener('input', function (e) {
             controllerSens = parseFloat(e.target.value);
@@ -2053,8 +2332,8 @@
                 robotRoot.rotation.set(0, 0.25, 0);
             }
             if (camera && controls) {
-                camera.position.set(1.85, 1.18, 1.55);
-                controls.target.set(0.1, 0.26, 0);
+                camera.position.set(1.85, 0.98, 1.65);
+                controls.target.set(0.05, 0.14, 0);
             }
             barrierToast.style.display = 'none';
         });
@@ -2141,10 +2420,13 @@
 
         document.getElementById('env-title').textContent = profile.title;
         document.getElementById('env-desc').textContent = profile.desc;
-        document.getElementById('sonar-depth-txt').textContent = profile.depth;
 
         if (waterMesh) waterMesh.material.color.setHex(profile.waterColor);
-        if (scene && scene.fog) scene.fog.color.setHex(profile.fogColor);
+        if (scene && scene.fog) {
+            scene.background.setHex(profile.fogColor);
+            scene.fog.color.setHex(profile.fogColor);
+        }
+        applyRealPhotoSkyDome(profile);
 
         hasConfiguredLake = true;
         setDriveMode(selectedMode);
@@ -2172,19 +2454,23 @@
             var rx = boatState.x;
             var rz = boatState.z;
             if (v === 'chase') {
-                var bx = rx - Math.cos(boatState.heading) * 2.3;
-                var bz = rz + Math.sin(boatState.heading) * 2.3;
-                camera.position.set(bx, 1.25, bz);
-                controls.target.set(rx, 0.28, rz);
-            } else if (v === 'satellite') {
-                camera.position.set(rx + 0.01, 14.0, rz + 0.01);
-                controls.target.set(rx, 0.0, rz);
+                var bx = rx - Math.cos(boatState.heading) * 2.4;
+                var bz = rz + Math.sin(boatState.heading) * 2.4;
+                camera.position.set(bx, 1.18, bz);
+                controls.target.set(rx, 0.24, rz);
+            } else if (v === 'belly') {
+                camera.position.set(rx + 0.90, -0.02, rz + 0.90);
+                controls.target.set(rx, -0.10, rz);
+                selectPart("9A", false);
             } else if (v === 'front') {
                 camera.position.set(rx + Math.cos(boatState.heading) * 1.55, 0.62, rz - Math.sin(boatState.heading) * 1.55);
                 controls.target.set(rx + Math.cos(boatState.heading) * 0.25, 0.24, rz - Math.sin(boatState.heading) * 0.25);
-            } else if (v === 'sonar') {
-                camera.position.set(rx + 1.1, 0.02, rz + 1.15);
-                controls.target.set(rx, -0.15, rz);
+            } else if (v === 'shore') {
+                camera.position.set(rx - 5.5, 2.2, rz + 5.5);
+                controls.target.set(rx, 0.2, rz);
+            } else if (v === 'satellite') {
+                camera.position.set(rx + 0.01, 22.0, rz + 0.01);
+                controls.target.set(rx, 0.0, rz);
             }
         });
     }
@@ -2219,23 +2505,26 @@
     // Live Diagnostic Feeds
     var aiCanvas = document.getElementById('ai-cam-canvas');
     var aiCtx = aiCanvas.getContext('2d');
+    var bellyCanvas = document.getElementById('belly-cam-canvas');
+    var bellyCtx = bellyCanvas.getContext('2d');
     var sonarCanvas = document.getElementById('sonar-radar-canvas');
     var sonarCtx = sonarCanvas.getContext('2d');
     var heatCanvas = document.getElementById('heatmap-canvas');
     var heatCtx = heatCanvas.getContext('2d');
 
     function renderLiveDiagnosticFeeds(t) {
-        aiCtx.fillStyle = '#061c24';
-        aiCtx.fillRect(0, 0, 360, 135);
-        aiCtx.fillStyle = '#123315';
-        aiCtx.fillRect(0, 0, 360, 32);
-
         var fwdX = Math.cos(boatState.heading);
         var fwdZ = -Math.sin(boatState.heading);
         var rightX = Math.sin(boatState.heading);
         var rightZ = Math.cos(boatState.heading);
 
-        var visibleTargets = 0;
+        // 1. Surface Mast AI Vision Feed
+        aiCtx.fillStyle = '#0b3142';
+        aiCtx.fillRect(0, 0, 360, 105);
+        aiCtx.fillStyle = '#2d5a27';
+        aiCtx.fillRect(0, 0, 360, 26);
+
+        var visibleSurface = 0;
         for (var i = 0; i < floatingDebrisList.length; i++) {
             var item = floatingDebrisList[i];
             if (item.state !== 'floating') continue;
@@ -2247,35 +2536,90 @@
             var forwardDist = relX * fwdX + relZ * fwdZ;
             var lateralOffset = relX * rightX + relZ * rightZ;
 
-            if (forwardDist > 0.35 && forwardDist < 3.6 && Math.abs(lateralOffset) < forwardDist * 0.75) {
-                visibleTargets++;
+            if (forwardDist > 0.35 && forwardDist < 4.5 && Math.abs(lateralOffset) < forwardDist * 0.75) {
+                visibleSurface++;
                 var screenX = 180 + (lateralOffset / (forwardDist * 0.75)) * 145;
-                var screenY = 38 + (1.0 - (forwardDist / 3.6)) * 78;
-                var boxScale = Math.max(16, 46 * (1.0 - forwardDist / 4.2));
+                var screenY = 30 + (1.0 - (forwardDist / 4.5)) * 60;
+                var boxScale = Math.max(14, 42 * (1.0 - forwardDist / 5.0));
 
                 aiCtx.strokeStyle = '#10b981';
                 aiCtx.lineWidth = 1.5;
                 aiCtx.strokeRect(screenX - boxScale / 2, screenY - boxScale / 3, boxScale, boxScale * 0.65);
 
                 aiCtx.fillStyle = '#10b981';
-                aiCtx.font = 'bold 9px monospace';
-                var conf = Math.min(0.98, (0.95 - forwardDist * 0.04)).toFixed(2);
-                aiCtx.fillText(item.label + ' ' + conf, screenX - boxScale / 2, screenY - boxScale / 3 - 3);
+                aiCtx.font = 'bold 8px monospace';
+                var conf = Math.min(0.98, (0.95 - forwardDist * 0.03)).toFixed(2);
+                aiCtx.fillText(item.label + ' ' + conf, screenX - boxScale / 2, screenY - boxScale / 3 - 2);
             }
         }
 
-        if (visibleTargets === 0) {
-            aiCtx.fillStyle = 'rgba(148, 163, 184, 0.75)';
-            aiCtx.font = 'bold 10px monospace';
-            aiCtx.fillText('0 TARGETS IN FOV — OPEN WATER AHEAD', 45, 82);
+        if (visibleSurface === 0) {
+            aiCtx.fillStyle = 'rgba(226, 232, 240, 0.75)';
+            aiCtx.font = 'bold 9px monospace';
+            aiCtx.fillText('0 SURFACE TARGETS IN FOV — OPEN LAKE AHEAD', 48, 65);
         }
 
+        // 2. Under-Belly 1080p Camera + Dual LED Floodlight Feed
+        bellyCtx.fillStyle = '#030d12';
+        bellyCtx.fillRect(0, 0, 360, 105);
+
+        if (bellyLedsOn) {
+            var leftBeam = bellyCtx.createRadialGradient(110, 55, 5, 110, 55, 85);
+            leftBeam.addColorStop(0, 'rgba(254, 240, 138, 0.28)');
+            leftBeam.addColorStop(1, 'rgba(6, 182, 212, 0)');
+            bellyCtx.fillStyle = leftBeam;
+            bellyCtx.fillRect(0, 0, 360, 105);
+
+            var rightBeam = bellyCtx.createRadialGradient(250, 55, 5, 250, 55, 85);
+            rightBeam.addColorStop(0, 'rgba(254, 240, 138, 0.28)');
+            rightBeam.addColorStop(1, 'rgba(6, 182, 212, 0)');
+            bellyCtx.fillStyle = rightBeam;
+            bellyCtx.fillRect(0, 0, 360, 105);
+        }
+
+        var visibleSubmerged = 0;
+        for (var s = 0; s < submergedDebrisList.length; s++) {
+            var subItem = submergedDebrisList[s];
+            if (!subItem.mesh) continue;
+            var sRelX = subItem.mesh.position.x - boatState.x;
+            var sRelZ = subItem.mesh.position.z - boatState.z;
+
+            var sFwd = sRelX * fwdX + sRelZ * fwdZ;
+            var sLat = sRelX * rightX + sRelZ * rightZ;
+
+            if (sFwd > -0.4 && sFwd < 2.8 && Math.abs(sLat) < 1.5) {
+                visibleSubmerged++;
+                var bx = 180 + (sLat / 1.5) * 140;
+                var by = 82 - ((sFwd + 0.4) / 3.2) * 60;
+
+                bellyCtx.strokeStyle = bellyLedsOn ? '#facc15' : '#06b6d4';
+                bellyCtx.lineWidth = 1.5;
+                bellyCtx.strokeRect(bx - 16, by - 11, 32, 22);
+                bellyCtx.fillStyle = bellyLedsOn ? '#facc15' : '#06b6d4';
+                bellyCtx.font = 'bold 8px monospace';
+                bellyCtx.fillText(subItem.label + ' (' + subItem.depthM + 'm)', bx - 22, by - 14);
+
+                if (isSimRunning && !subItem.mapped) {
+                    subItem.mapped = true;
+                    submergedDetectedCount++;
+                    document.getElementById('stat-submerged').textContent = submergedDetectedCount + ' bed detections';
+                }
+            }
+        }
+
+        if (visibleSubmerged === 0) {
+            bellyCtx.fillStyle = 'rgba(148, 163, 184, 0.72)';
+            bellyCtx.font = 'bold 9px monospace';
+            bellyCtx.fillText('BELLY CAM: NATURAL LAKEBED SAND & SILT', 58, 58);
+        }
+
+        // 3. Lower Ventral Acoustic Sonar Radar
         sonarCtx.fillStyle = '#040d14';
-        sonarCtx.fillRect(0, 0, 360, 135);
-        var cx = 180, cy = 122;
+        sonarCtx.fillRect(0, 0, 360, 105);
+        var cx = 180, cy = 96;
         sonarCtx.strokeStyle = 'rgba(6, 182, 212, 0.28)';
         sonarCtx.lineWidth = 1;
-        [30, 60, 90, 115].forEach(function (r) {
+        [25, 50, 75, 90].forEach(function (r) {
             sonarCtx.beginPath();
             sonarCtx.arc(cx, cy, r, Math.PI, 0);
             sonarCtx.stroke();
@@ -2287,14 +2631,15 @@
             sonarCtx.lineWidth = 2;
             sonarCtx.beginPath();
             sonarCtx.moveTo(cx, cy);
-            sonarCtx.lineTo(cx + Math.cos(sweepAngle) * 115, cy + Math.sin(sweepAngle) * 115);
+            sonarCtx.lineTo(cx + Math.cos(sweepAngle) * 90, cy + Math.sin(sweepAngle) * 90);
             sonarCtx.stroke();
         } else {
             sonarCtx.fillStyle = 'rgba(245, 158, 11, 0.8)';
-            sonarCtx.font = 'bold 10px monospace';
-            sonarCtx.fillText('SONAR IN STANDBY (SIMULATOR OFF)', 60, 75);
+            sonarCtx.font = 'bold 9px monospace';
+            sonarCtx.fillText('SONAR IN STANDBY (SIMULATOR OFF)', 72, 55);
         }
 
+        // 4. GIS Heatmap
         var cw = heatCanvas.width / HEAT_COLS;
         var ch = heatCanvas.height / HEAT_ROWS;
         for (var r = 0; r < HEAT_ROWS; r++) {
@@ -2309,8 +2654,8 @@
             }
         }
 
-        var mapX = ((boatState.x / CHANNEL_SAFE_X) * 0.42 + 0.5) * heatCanvas.width;
-        var mapY = ((boatState.z / CHANNEL_SAFE_Z) * 0.42 + 0.5) * heatCanvas.height;
+        var mapX = ((boatState.x / OPEN_LAKE_RADIUS_X) * 0.42 + 0.5) * heatCanvas.width;
+        var mapY = ((boatState.z / OPEN_LAKE_RADIUS_Z) * 0.42 + 0.5) * heatCanvas.height;
         heatCtx.fillStyle = '#10b981';
         heatCtx.beginPath();
         heatCtx.arc(mapX, mapY, 4.5, 0, Math.PI * 2);
@@ -2334,6 +2679,11 @@
             }
         }
 
+        // Update Live Bathymetric Water Depth from the Sculpted 3D Shoreline Terrain!
+        var liveDepthM = getWaterDepthMeters(boatState.x, boatState.z).toFixed(1);
+        document.getElementById('tel-depth').textContent = liveDepthM + ' m';
+        document.getElementById('sonar-depth-txt').textContent = liveDepthM + ' m';
+
         // STRICT CHECK: Conveyor, Propellers & Movement ONLY run when isSimRunning === true
         if (isSimRunning && robotRoot) {
             if (lidarRotor) lidarRotor.rotation.y += 0.06;
@@ -2341,13 +2691,14 @@
             var prevX = boatState.x;
             var prevZ = boatState.z;
 
-            var normX = boatState.x / CHANNEL_SAFE_X;
-            var normZ = boatState.z / CHANNEL_SAFE_Z;
-            var radialRatio = Math.hypot(normX, normZ);
+            // Check natural shoreline elevation ahead of the bow
+            var probeX = boatState.x + Math.cos(boatState.heading) * 1.8;
+            var probeZ = boatState.z - Math.sin(boatState.heading) * 1.8;
+            var probeBedY = getTerrainElevation(probeX, probeZ);
 
             if (driveMode === 'manual') {
-                var maxFwd = 0.018 * controllerSens;
-                var maxRev = -0.013 * controllerSens;
+                var maxFwd = 0.022 * controllerSens;
+                var maxRev = -0.015 * controllerSens;
                 var maxTurn = 0.026 * controllerSens;
 
                 var targetSpeed = inputKeys.up ? maxFwd : (inputKeys.down ? maxRev : 0.0);
@@ -2359,7 +2710,8 @@
                 boatState.turnRate += (targetTurn - boatState.turnRate) * 0.20;
             } else {
                 var desiredAngle;
-                if (radialRatio > 0.78) {
+                if (probeBedY > -0.22) {
+                    // Approaching shallow sandy beach / rocky bank -> smoothly steer toward deeper open water
                     desiredAngle = Math.atan2(boatState.z, -boatState.x);
                 } else {
                     var targetTrash = getNearestFloatingTrash();
@@ -2374,7 +2726,7 @@
                 angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff));
 
                 var turnIntensity = Math.min(1.0, Math.abs(angleDiff) / 0.8);
-                var cruiseSpeed = (0.015 * controllerSens) * (1.0 - turnIntensity * 0.65);
+                var cruiseSpeed = (0.018 * controllerSens) * (1.0 - turnIntensity * 0.60);
 
                 boatState.speed += (cruiseSpeed - boatState.speed) * 0.10;
                 var rawTurn = angleDiff * 0.08 * controllerSens;
@@ -2386,17 +2738,18 @@
             var nextX = boatState.x + Math.cos(boatState.heading) * boatState.speed;
             var nextZ = boatState.z - Math.sin(boatState.heading) * boatState.speed;
 
-            var nextRatio = Math.hypot(nextX / CHANNEL_SAFE_X, nextZ / CHANNEL_SAFE_Z);
-            if (nextRatio > 0.86) {
+            // Natural Shoreline Shallow-Water Protection (Prevents driving up onto dry land!)
+            var nextBedY = getTerrainElevation(nextX, nextZ);
+            if (nextBedY > -0.18) {
                 barrierToast.style.display = 'block';
-                if (nextRatio >= 0.96) {
-                    var pullScale = 0.955 / nextRatio;
-                    nextX *= pullScale;
-                    nextZ *= pullScale;
-                    var inwardAngle = Math.atan2(nextZ, -nextX);
-                    var diff = inwardAngle - boatState.heading;
+                if (nextBedY > -0.06) {
+                    // Gently glide back off the shallow beach into deep water
+                    nextX = boatState.x * 0.985;
+                    nextZ = boatState.z * 0.985;
+                    var deepAngle = Math.atan2(nextZ, -nextX);
+                    var diff = deepAngle - boatState.heading;
                     diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-                    boatState.heading += (diff >= 0 ? 1 : -1) * 0.035;
+                    boatState.heading += (diff >= 0 ? 1 : -1) * 0.038;
                 }
             } else {
                 barrierToast.style.display = 'none';
@@ -2409,7 +2762,8 @@
             var actualDz = boatState.z - prevZ;
             camera.position.x += actualDx;
             camera.position.z += actualDz;
-            controls.target.set(boatState.x, 0.28, boatState.z);
+            controls.target.x += actualDx;
+            controls.target.z += actualDz;
 
             boatState.pitch += (Math.abs(boatState.speed) * 1.4 - boatState.pitch) * 0.1;
             boatState.roll += (-boatState.turnRate * 1.6 - boatState.roll) * 0.1;
@@ -2444,31 +2798,34 @@
             }
 
             if (sonarDropGroup) {
-                sonarDropGroup.position.y += (-0.10 - sonarDropGroup.position.y) * 0.05;
+                sonarDropGroup.position.y += (-0.06 - sonarDropGroup.position.y) * 0.05;
             }
             for (var sr = 0; sr < sonarPulseRings.length; sr++) {
                 var p = ((t * 0.65) + sr * 0.33) % 1.0;
-                var scale = 1.0 + p * 8.5;
+                var scale = 1.0 + p * 8.0;
                 sonarPulseRings[sr].scale.set(scale, scale, 1);
-                sonarPulseRings[sr].position.set(boatState.x, -0.20 - (p * 0.42), boatState.z);
+                sonarPulseRings[sr].position.set(
+                    boatState.x - Math.cos(boatState.heading) * 0.06,
+                    -0.22 - (p * 0.38),
+                    boatState.z + Math.sin(boatState.heading) * 0.06
+                );
                 sonarPulseRings[sr].material.opacity = (1.0 - p) * 0.75;
             }
 
             // 3-STAGE WASTE COLLECTION LIFECYCLE
             var scoopMouthX = boatState.x + Math.cos(boatState.heading) * 0.64;
             var scoopMouthZ = boatState.z - Math.sin(boatState.heading) * 0.64;
-            var itemsOnBeltCount = 0;
             var tempWorldVec = new THREE.Vector3();
 
             for (var fd = 0; fd < floatingDebrisList.length; fd++) {
                 var fItem = floatingDebrisList[fd];
                 if (fItem.state === 'floating') {
                     var distToMouth = Math.hypot(fItem.mesh.position.x - scoopMouthX, fItem.mesh.position.z - scoopMouthZ);
-                    if (distToMouth < 0.52) {
+                    if (distToMouth < 0.55) {
                         fItem.mesh.position.x += (scoopMouthX - fItem.mesh.position.x) * 0.16;
                         fItem.mesh.position.z += (scoopMouthZ - fItem.mesh.position.z) * 0.16;
                     }
-                    if (distToMouth < 0.24) {
+                    if (distToMouth < 0.25) {
                         fItem.state = 'conveying';
                         fItem.beltProgress = 0.0;
                         fItem.beltLaneZ = (Math.random() - 0.5) * 0.26;
@@ -2476,7 +2833,6 @@
                         fItem.capturedWorldZ = fItem.mesh.position.z;
                     }
                 } else if (fItem.state === 'conveying') {
-                    itemsOnBeltCount++;
                     fItem.beltProgress += beltStep / 0.60;
 
                     var localRampX = 0.30 - fItem.beltProgress * 0.60;
@@ -2485,8 +2841,8 @@
                     fItem.mesh.position.copy(tempWorldVec);
 
                     if (fItem.beltProgress >= 1.0) {
-                        var gx = Math.min(HEAT_COLS - 1, Math.max(0, Math.floor(((fItem.capturedWorldX / CHANNEL_SAFE_X) * 0.45 + 0.5) * HEAT_COLS)));
-                        var gz = Math.min(HEAT_ROWS - 1, Math.max(0, Math.floor(((fItem.capturedWorldZ / CHANNEL_SAFE_Z) * 0.45 + 0.5) * HEAT_ROWS)));
+                        var gx = Math.min(HEAT_COLS - 1, Math.max(0, Math.floor(((fItem.capturedWorldX / OPEN_LAKE_RADIUS_X) * 0.45 + 0.5) * HEAT_COLS)));
+                        var gz = Math.min(HEAT_ROWS - 1, Math.max(0, Math.floor(((fItem.capturedWorldZ / OPEN_LAKE_RADIUS_Z) * 0.45 + 0.5) * HEAT_ROWS)));
                         if (heatmapGrid[gz][gx] === 0) activeHotspotCells++;
                         heatmapGrid[gz][gx] = Math.min(5, heatmapGrid[gz][gx] + 1);
 
@@ -2508,8 +2864,6 @@
                     }
                 }
             }
-
-            document.getElementById('stat-on-belt').textContent = itemsOnBeltCount + ' items on ramp';
 
             for (var wpIdx = 0; wpIdx < wakeParticles.length; wpIdx++) {
                 var wp = wakeParticles[wpIdx];
@@ -2542,9 +2896,8 @@
         updatePinPositions();
     }
 
-    // Built-In Offline 2.5D Fallback (if mobile file viewer blocks CDN scripts)
+    // Offline 2.5D Fallback
     function start2DFallbackEngine() {
-        using2DFallback = true;
         var fbCanvas = document.getElementById('fallback-2d-canvas');
         fbCanvas.style.display = 'block';
         var fbCtx = fbCanvas.getContext('2d');
@@ -2554,7 +2907,7 @@
             floatingDebrisList.push({
                 x: pos.x,
                 z: pos.z,
-                label: i % 2 === 0 ? "PET_BOTTLE" : "HYACINTH_WEED",
+                label: i % 2 === 0 ? "PET_BOTTLE" : "FLOATING_WEED",
                 weightKg: 0.12,
                 state: 'floating'
             });
@@ -2568,17 +2921,10 @@
             fbCanvas.width = w;
             fbCanvas.height = h;
 
-            fbCtx.fillStyle = '#061c24';
+            fbCtx.fillStyle = '#0b3142';
             fbCtx.fillRect(0, 0, w, h);
 
             var cx = w * 0.5, cy = h * 0.52;
-            fbCtx.strokeStyle = '#f97316';
-            fbCtx.lineWidth = 3;
-            fbCtx.beginPath();
-            fbCtx.ellipse(cx, cy, w * 0.42, h * 0.38, 0, 0, Math.PI * 2);
-            fbCtx.stroke();
-
-            // Draw Catamaran in center
             fbCtx.fillStyle = '#dbe4ee';
             fbCtx.fillRect(cx - 48, cy - 28, 96, 14);
             fbCtx.fillRect(cx - 48, cy + 14, 96, 14);
